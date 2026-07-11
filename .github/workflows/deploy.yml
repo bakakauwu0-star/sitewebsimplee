@@ -23,10 +23,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare static files
+        run: |
+          mkdir -p _site
+          cp index.html index.php dashboard.html dashboard.css styles.css app.js _site/
+          cp .htaccess _site/ 2>/dev/null || true
+          cp -r api _site/ 2>/dev/null || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
