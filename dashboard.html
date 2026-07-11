@@ -3,177 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𝓼ιмρℓє — Panneau de Contrôle</title>
+<meta name="theme-color" content="#9933ff">
+<title>𝓼ιмρℓє — Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+
 <div class="layout">
-<nav class="sidebar" id="sidebar">
-  <h1>⚡ 𝓼ιмρℓє</h1>
-  <div id="authStatus" style="text-align:center;padding:4px 8px;margin-bottom:8px;font-size:.75em;border-radius:8px;background:var(--glass)">🔒 <span id="authLabel">Non connecté</span></div>
-  <div class="nav-group">Général</div>
-  <div class="nav-item active" data-page="overview">📊 Tableau de bord</div>
-  <div class="nav-item" data-page="commands">⚙️ Commandes</div>
-  <div class="nav-item" data-page="chat">💬 Chat</div>
-  <div class="nav-group">Gestion</div>
-  <div class="nav-item" data-page="inventory">🎒 Inventaire</div>
-  <div class="nav-item" data-page="tickets">🎫 Tickets</div>
-  <div class="nav-item" data-page="categories">📂 Catégories</div>
-  <div class="nav-item" data-page="servers">🖥️ Serveurs</div>
-  <div class="nav-group">Économie</div>
-  <div class="nav-item" data-page="economy">💰 Économie</div>
-  <div class="nav-item" data-page="giveaway">🎁 Giveaways</div>
-  <div class="nav-item" data-page="leveling">⭐ Niveaux</div>
-  <div class="nav-group">Communauté</div>
-  <div class="nav-item" data-page="moderation">🛡️ Modération</div>
-  <div class="nav-item" data-page="fun">🎉 Fun</div>
-  <div class="nav-item" data-page="music">🎵 Musique</div>
-</nav>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand"><a href="index.html">⚡ 𝓼ιмρℓє</a></div>
+  <div class="auth-badge" id="authBadge">🔒 Non connecté</div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Général</div>
+    <button class="nav-btn active" data-page="overview">📊 Tableau de bord</button>
+    <button class="nav-btn" data-page="commands">⚙️ Commandes</button>
+    <button class="nav-btn" data-page="chat">💬 Chat</button>
+    <div class="nav-section">Gestion</div>
+    <button class="nav-btn" data-page="inventory">🎒 Inventaire</button>
+    <button class="nav-btn" data-page="tickets">🎫 Tickets</button>
+    <button class="nav-btn" data-page="servers">🖥️ Serveurs</button>
+    <div class="nav-section">Stats</div>
+    <button class="nav-btn" data-page="economy">💰 Économie</button>
+    <button class="nav-btn" data-page="giveaway">🎁 Giveaways</button>
+    <button class="nav-btn" data-page="moderation">🛡️ Modération</button>
+  </nav>
+</aside>
 
 <main class="main" id="main">
-  <div id="sb"></div>
+  <button class="mobile-toggle" id="mobileToggle" onclick="$('sidebar').classList.toggle('open')">☰</button>
+  <div id="toast"></div>
 
-  <!-- OVERVIEW -->
   <div id="page-overview" class="page active">
-    <div class="stats" id="ovStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px">
-      <div class="sc"><div class="ico">🖥️</div><div class="val" id="sGuilds">-</div><div class="lbl">Serveurs</div></div>
-      <div class="sc"><div class="ico">👥</div><div class="val" id="sUsers">-</div><div class="lbl">Membres</div></div>
-      <div class="sc"><div class="ico">📡</div><div class="val" id="sPing">-</div><div class="lbl">Latence</div></div>
-      <div class="sc"><div class="ico">⏱️</div><div class="val" id="sUptime">-</div><div class="lbl">Uptime</div></div>
-      <div class="sc"><div class="ico">💬</div><div class="val" id="sChannels">-</div><div class="lbl">Salons</div></div>
-      <div class="sc"><div class="ico">⚙️</div><div class="val" id="sCommands">-</div><div class="lbl">Commandes</div></div>
-      <div class="sc"><div class="ico">📄</div><div class="val" id="sFiles">-</div><div class="lbl">Fichiers</div></div>
-      <div class="sc"><div class="ico">💾</div><div class="val" id="sMemory">-</div><div class="lbl">Mémoire</div></div>
+    <h2 class="page-title">📊 Tableau de bord</h2>
+    <div class="stats-grid" id="ovStats">
+      <div class="stat-card"><div class="sc-icon">🖥️</div><div class="sc-val" id="sGuilds">-</div><div class="sc-lbl">Serveurs</div></div>
+      <div class="stat-card"><div class="sc-icon">👥</div><div class="sc-val" id="sUsers">-</div><div class="sc-lbl">Utilisateurs</div></div>
+      <div class="stat-card"><div class="sc-icon">📡</div><div class="sc-val" id="sPing">-</div><div class="sc-lbl">Latence</div></div>
+      <div class="stat-card"><div class="sc-icon">⏱️</div><div class="sc-val" id="sUptime">-</div><div class="sc-lbl">Uptime</div></div>
+      <div class="stat-card"><div class="sc-icon">💬</div><div class="sc-val" id="sChannels">-</div><div class="sc-lbl">Salons</div></div>
+      <div class="stat-card"><div class="sc-icon">⚙️</div><div class="sc-val" id="sCommands">-</div><div class="sc-lbl">Commandes</div></div>
+      <div class="stat-card"><div class="sc-icon">📄</div><div class="sc-val" id="sFiles">285</div><div class="sc-lbl">Fichiers</div></div>
+      <div class="stat-card"><div class="sc-icon">💾</div><div class="sc-val" id="sMemory">-</div><div class="sc-lbl">Mémoire</div></div>
     </div>
-    <div class="grid cols-2" style="margin-bottom:16px">
-      <div class="cd"><h3>🎫 Tickets</h3>
-        <div class="r"><span class="l">Ouverts</span><span class="v" id="tOpen">-</span></div>
-        <div class="r"><span class="l">Fermés</span><span class="v" id="tClosed">-</span></div>
-        <div class="r"><span class="l">Total</span><span class="v" id="tTotal">-</span></div>
-      </div>
-      <div class="cd"><h3>🛡️ Modération</h3>
-        <div class="r"><span class="l">Mutes</span><span class="v" id="mMutes">-</span></div>
-        <div class="r"><span class="l">Avertissements</span><span class="v" id="mWarns">-</span></div>
-        <div class="r"><span class="l">Cas traités</span><span class="v" id="mCases">-</span></div>
-      </div>
-      <div class="cd"><h3>⭐ XP & Niveaux</h3>
-        <div class="r"><span class="l">Joueurs suivis</span><span class="v" id="xPlayers">-</span></div>
-        <div class="r"><span class="l">XP totale</span><span class="v" id="xTotal">-</span></div>
-        <div class="r"><span class="l">Top niveau</span><span class="v" id="xTop">-</span></div>
-      </div>
-      <div class="cd"><h3>🎮 Fun & Jeux</h3>
-        <div class="r"><span class="l">Duels</span><span class="v" id="fDuels">-</span></div>
-        <div class="r"><span class="l">Giveaways actifs</span><span class="v" id="fGive">-</span></div>
-        <div class="r"><span class="l">En vocal</span><span class="v" id="fVoice">-</span></div>
-      </div>
+    <div class="detail-grid">
+      <div class="detail-card"><h3>🎫 Tickets</h3><div class="dr"><span>Ouverts</span><span id="tOpen">-</span></div><div class="dr"><span>Fermés</span><span id="tClosed">-</span></div><div class="dr"><span>Total</span><span id="tTotal">-</span></div></div>
+      <div class="detail-card"><h3>🛡️ Modération</h3><div class="dr"><span>Mutes</span><span id="mMutes">-</span></div><div class="dr"><span>Avertissements</span><span id="mWarns">-</span></div><div class="dr"><span>Cas</span><span id="mCases">-</span></div></div>
+      <div class="detail-card"><h3>⭐ XP & Niveaux</h3><div class="dr"><span>Joueurs</span><span id="xPlayers">-</span></div><div class="dr"><span>XP totale</span><span id="xTotal">-</span></div><div class="dr"><span>Top niveau</span><span id="xTop">-</span></div></div>
+      <div class="detail-card"><h3>🎮 Fun</h3><div class="dr"><span>Duels</span><span id="fDuels">-</span></div><div class="dr"><span>Giveaways</span><span id="fGive">-</span></div><div class="dr"><span>En vocal</span><span id="fVoice">-</span></div></div>
     </div>
   </div>
 
-  <!-- COMMANDS -->
   <div id="page-commands" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">⚙️ Commandes</h2><span style="color:var(--t2);font-size:.85em" id="cmdStats"></span></div>
-    <div id="cmdsList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px"><div class="load">⏳</div></div>
+    <h2 class="page-title">⚙️ Commandes <span id="cmdStats" class="page-sub"></span></h2>
+    <div id="cmdsList" class="cmds-container"><div class="loading">⏳ Chargement...</div></div>
   </div>
 
-  <!-- CHAT -->
-  <div id="page-chat" class="page" style="display:flex;flex-direction:column;height:calc(100vh - 40px)">
-    <div style="display:flex;gap:12px;flex:1;overflow:hidden">
-      <div style="width:250px;flex-shrink:0;background:var(--card);border-radius:10px;border:1px solid var(--brd);display:flex;flex-direction:column;overflow:hidden">
-        <div style="padding:10px 12px;border-bottom:1px solid var(--brd);font-weight:600;font-size:.85em">💬 Conversations</div>
-        <div id="convList" style="flex:1;overflow-y:auto"><div class="emp">Clique sur « + » pour créer une conversation</div></div>
-        <button class="btn btn-g" style="margin:8px" onclick="newConv()">➕ Nouvelle conversation</button>
+  <div id="page-chat" class="page chat-page">
+    <div class="chat-layout">
+      <div class="chat-sidebar">
+        <div class="chat-header">💬 Conversations</div>
+        <div id="convList" class="conv-list"><div class="empty-sm">Aucune conversation</div></div>
+        <button class="btn btn-ghost btn-sm" style="margin:8px" onclick="newConv()">+ Nouvelle</button>
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:10px;border:1px solid var(--brd);overflow:hidden">
-        <div id="chatHdr" style="padding:10px 14px;border-bottom:1px solid var(--brd);font-weight:600;font-size:.88em;display:flex;align-items:center;gap:8px"><span id="chatDot" style="width:8px;height:8px;border-radius:50%;background:#666;display:inline-block"></span><span id="chatUser">Sélectionnez un membre</span></div>
-        <div id="chatMsgs" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:6px"><div class="emp">💬 Cliquez sur « + » puis un membre</div></div>
-        <div style="display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--brd)">
-          <input id="chatIn" placeholder="Message..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--brd);background:rgba(255,255,255,.05);color:var(--t);font-size:.85em;outline:none;font-family:inherit" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}">
-          <button class="btn btn-primary" onclick="sendChat()">Envoyer</button>
+      <div class="chat-main">
+        <div class="chat-top"><span class="chat-dot" id="chatDot"></span><span id="chatUser">Sélectionnez un membre</span></div>
+        <div id="chatMsgs" class="chat-messages"><div class="empty-sm">Cliquez sur "+ Nouvelle" pour commencer</div></div>
+        <div class="chat-input">
+          <input id="chatIn" placeholder="Message..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}">
+          <button class="btn btn-primary" style="padding:10px 20px" onclick="sendChat()">Envoyer</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TICKETS -->
   <div id="page-tickets" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">🎫 Tickets récents</h2></div>
-    <div id="ticketsContent"><div class="load">⏳</div></div>
+    <h2 class="page-title">🎫 Tickets récents</h2>
+    <div id="ticketsContent"><div class="loading">⏳</div></div>
   </div>
 
-  <!-- CATEGORIES -->
-  <div id="page-categories" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">📂 Catégories</h2><button class="btn btn-g" onclick="loadCats()">🔄</button></div>
-    <div id="catsContent"><div class="load">⏳</div></div>
-  </div>
-
-  <!-- SERVEURS -->
   <div id="page-servers" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">🖥️ Serveurs</h2></div>
-    <div id="srvContent"><div class="load">⏳</div></div>
+    <h2 class="page-title">🖥️ Serveurs</h2>
+    <div id="srvContent"><div class="loading">⏳</div></div>
   </div>
 
-  <!-- ÉCONOMIE -->
   <div id="page-economy" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">💰 Top Économie (XP)</h2><button class="btn btn-g" onclick="loadLeveling()">🔄</button></div>
-    <div id="ecoContent"><div class="load">⏳</div></div>
+    <h2 class="page-title">💰 Classement Économie</h2>
+    <div id="ecoContent"><div class="loading">⏳</div></div>
   </div>
 
-  <!-- GIVEAWAY -->
   <div id="page-giveaway" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">🎁 Giveaways</h2></div>
-    <div id="giveContent"><div class="load">⏳</div></div>
+    <h2 class="page-title">🎁 Giveaways</h2>
+    <div id="giveContent"><div class="loading">⏳</div></div>
   </div>
 
-  <!-- LEVELING -->
-  <div id="page-leveling" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">⭐ Classement Niveaux</h2><button class="btn btn-g" onclick="loadLeveling()">🔄</button></div>
-    <div id="lvlContent"><div class="load">⏳</div></div>
-  </div>
-
-  <!-- MODÉRATION -->
   <div id="page-moderation" class="page">
-    <div class="stats" id="modStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px">
-      <div class="sc"><div class="ico">🔨</div><div class="val" id="modBans">-</div><div class="lbl">Cas</div></div>
-      <div class="sc"><div class="ico">🔇</div><div class="val" id="modMutes2">-</div><div class="lbl">Mutes</div></div>
-      <div class="sc"><div class="ico">⚠️</div><div class="val" id="modWarns2">-</div><div class="lbl">Avertissements</div></div>
+    <h2 class="page-title">🛡️ Modération</h2>
+    <div class="stats-grid" id="modStats">
+      <div class="stat-card"><div class="sc-icon">🔨</div><div class="sc-val" id="modCases">-</div><div class="sc-lbl">Cas</div></div>
+      <div class="stat-card"><div class="sc-icon">🔇</div><div class="sc-val" id="modMutes">-</div><div class="sc-lbl">Mutes</div></div>
+      <div class="stat-card"><div class="sc-icon">⚠️</div><div class="sc-val" id="modWarns">-</div><div class="sc-lbl">Avertissements</div></div>
+      <div class="stat-card"><div class="sc-icon">💥</div><div class="sc-val" id="modStrikes">-</div><div class="sc-lbl">Strikes</div></div>
     </div>
-    <div class="grid cols-2"><div class="cd"><h3>🔨 Dernières actions</h3><div id="modActions"><div class="emp">Aucune action récente</div></div></div></div>
   </div>
 
-  <!-- FUN -->
-  <div id="page-fun" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">🎉 Fun & Jeux</h2></div>
-    <div class="grid cols-2" id="funContent"><div class="load">⏳</div></div>
-  </div>
-
-  <!-- MUSIQUE -->
-  <div id="page-music" class="page">
-    <div class="bar"><h2 style="font-size:1.1em">🎵 Musique</h2></div>
-    <div class="grid cols-2" id="musicContent"><div class="load">⏳</div></div>
-  </div>
-
-  <!-- INVENTAIRE -->
   <div id="page-inventory" class="page">
-    <div id="invLoginPrompt" style="display:none">
-      <div class="cd" style="max-width:400px;margin:40px auto;text-align:center;padding:30px">
-        <div style="font-size:2.5em;margin-bottom:12px">🔒</div>
-        <h2 style="font-size:1.2em;margin-bottom:8px">Connexion requise</h2>
-        <p style="color:var(--t2);font-size:.85em;margin-bottom:16px">Connecte-toi depuis la page d'accueil pour gérer tes rôles.</p>
-        <a class="btn btn-primary" href="index.html#login">🔓 Se connecter</a>
-      </div>
+    <div id="invLocked" class="locked-card" style="display:none">
+      <div class="locked-icon">🔒</div>
+      <h3>Connexion requise</h3>
+      <p>Connecte-toi depuis la page d'accueil.</p>
+      <a href="index.html#login" class="btn btn-primary" style="margin-top:12px">Se connecter</a>
     </div>
     <div id="invContent" style="display:none">
-      <div class="bar">
-        <h2 style="font-size:1.1em">🎒 Mon Inventaire</h2>
-        <select class="sel" id="invGuildSel" onchange="loadInventory()"></select>
-        <button class="btn btn-g" onclick="loadInventory()">🔄</button>
+      <h2 class="page-title">🎒 Inventaire <select id="invGuildSel" onchange="loadInventory()" class="sel-inline"></select></h2>
+      <div class="detail-grid">
+        <div class="detail-card"><h3>👁️ Rôles affichés</h3><div id="invDisplayed"><div class="empty-sm">Aucun</div></div></div>
+        <div class="detail-card"><h3>🙈 Rôles masqués</h3><div id="invHidden"><div class="empty-sm">Aucun</div></div></div>
       </div>
-      <div class="grid cols-2" style="margin-bottom:12px">
-        <div class="cd"><h3>👁️ Rôles affichés</h3><div id="invDisplayed" class="emp">Aucun</div></div>
-        <div class="cd"><h3>🙈 Rôles masqués</h3><div id="invHidden" class="emp">Aucun</div></div>
-      </div>
-      <div class="cd" style="margin-bottom:12px"><h3>🔒 Rôles système</h3><div id="invLocked" class="emp">Aucun</div></div>
-      <div class="cd"><h3>📥 Rôles disponibles</h3><div id="invClaimable" class="emp">Aucun</div></div>
+      <div class="detail-card" style="margin-top:12px"><h3>🔒 Rôles système</h3><div id="invLocked2"><div class="empty-sm">Aucun</div></div></div>
+      <div class="detail-card" style="margin-top:12px"><h3>📥 Rôles disponibles</h3><div id="invClaimable"><div class="empty-sm">Aucun</div></div></div>
     </div>
   </div>
 </main>
@@ -181,62 +130,48 @@
 
 <script src="app.js"></script>
 <script>
-const API='/api/bot', AAPI='/api/auth', IAPI='/api/inventory';
-let UID=''; let convs=[]; let chatUser=null; let chatInt=null;
+const API='/api/bot',IAPI='/api/inventory';
+let UID='',chatUser=null,chatInt=null;
 let SESSION_TOKEN=localStorage.getItem('session_token')||'';
-let SESSION_USER=null; let SESSION_PERMS=null;
+let SESSION_USER=null,SESSION_PERMS=null;
 
-function $(id){return document.getElementById(id)}
-function st(t,m,to=5000){const e=$('sb');e.className=t;e.textContent=m;e.style.display='block';if(to)setTimeout(()=>e.style.display='none',to)}
-function authHeaders(extra){return{'Content-Type':'application/json',...(SESSION_TOKEN?{'x-session-token':SESSION_TOKEN}:{}),...extra}}
+const $=id=>document.getElementById(id);
+function toast(m,t='ok'){const e=$('toast');e.className='toast toast-'+t;e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',4000)}
 
-// ---- auth ----
 function updateAuthUI(){
-  const el=$('authLabel');const stt=$('authStatus');
-  if(SESSION_USER){el.textContent=SESSION_USER.id.slice(0,8)+'…';stt.style.background='rgba(46,204,113,0.15)'}
-  else{el.textContent='Non connecté';stt.style.background='var(--glass)'}
+  const e=$('authBadge');
+  if(SESSION_USER){e.textContent='🔑 '+SESSION_USER.id.slice(0,10)+'…';e.className='auth-badge auth-ok'}
+  else{e.textContent='🔒 Non connecté';e.className='auth-badge'}
 }
+
 async function checkSession(){
   if(!SESSION_TOKEN)return null;
   try{
-    const r=await window.authCall('/verify',{});
-    if(r&&r.valid){SESSION_USER={id:r.user.id};return r}
-  }catch(e){}
-  // demo restore
-  try{
     const id=(SESSION_TOKEN||'').replace('demo-','').split('-')[0];
-    if(id){SESSION_USER={id};SESSION_PERMS=window.deriveProfile(id);updateAuthUI();return {valid:true}}
+    if(id){SESSION_USER={id};SESSION_PERMS=window.deriveProfile(id);updateAuthUI();return{valid:true}}
   }catch(e){}
   return null;
 }
 
-// ---- navigation ----
-document.querySelectorAll('.nav-item').forEach(i=>i.addEventListener('click',()=>{
-  if(window.innerWidth<=768){$('sidebar').classList.remove('open')}
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+// Navigation
+document.querySelectorAll('.nav-btn[data-page]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.nav-btn[data-page]').forEach(n=>n.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  i.classList.add('active');
-  const pg=$('page-'+i.dataset.page);
-  if(pg){pg.classList.add('active');loadPage(i.dataset.page)}
+  b.classList.add('active');
+  const pg=$('page-'+b.dataset.page);
+  if(pg){pg.classList.add('active');loadPage(b.dataset.page)}
+  if(window.innerWidth<=768)$('sidebar').classList.remove('open');
 }));
 
 function loadPage(n){
-  if(n==='chat')initChat();
-  if(n==='overview')loadOverview();
-  if(n==='commands')loadCommands();
-  if(n==='tickets')loadTickets();
-  if(n==='categories')loadCats();
-  if(n==='servers')loadServers();
-  if(n==='economy')loadLeveling();
-  if(n==='giveaway')loadGiveaways();
-  if(n==='leveling')loadLeveling();
-  if(n==='moderation')loadModeration();
-  if(n==='fun')loadFun();
-  if(n==='music')loadMusic();
-  if(n==='inventory')showInventory();
+  const map={overview:loadOverview,commands:loadCommands,tickets:loadTickets,servers:loadServers,economy:loadLeveling,giveaway:loadGiveaways,moderation:loadModeration,inventory:showInventory,chat:()=>{loadConvs()}};
+  if(map[n])map[n]();
 }
 
-// ---- DASHBOARD ----
+// Toast helper in dashboard
+function st(t,m){toast(m,t)}
+
+// Overview
 async function loadOverview(){
   try{const s=await window.api('/stats');$('sGuilds').textContent=fmt(s.guilds);$('sUsers').textContent=fmt(s.users);$('sPing').textContent=fmt(s.ping)+'ms';$('sChannels').textContent=fmt(s.channels);$('sCommands').textContent=fmt(s.commands);$('sMemory').textContent=(s.memory/1024/1024).toFixed(1)+'MB';if(s.uptime)$('sUptime').textContent=ut(s.uptime)}catch(e){}
   try{const t=await window.api('/tickets');$('tOpen').textContent=fmt(t.open);$('tClosed').textContent=fmt(t.closed);$('tTotal').textContent=fmt(t.total)}catch(e){}
@@ -245,103 +180,82 @@ async function loadOverview(){
   try{const f=await window.api('/fun/stats');$('fDuels').textContent=fmt(f.totalDuels)}catch(e){}
   try{const g=await window.api('/giveaways/stats');$('fGive').textContent=fmt(g.active||0)}catch(e){}
   try{const v=await window.api('/voice/stats');$('fVoice').textContent=fmt(v.usersInVoice||0)}catch(e){}
-  try{$('sFiles').textContent=fmt(285)}catch(e){}
 }
 
-// ---- COMMANDS ----
+// Commands
 async function loadCommands(){
   try{
     const d=await window.api('/commands');const c=d.commands;const en=c.filter(x=>x.enabled).length;
-    $('cmdStats').textContent=`${en}/${c.length} actives`;
-    const gr={};
-    for(const x of c){if(!gr[x.category])gr[x.category]=[];gr[x.category].push(x)}
-    let h='';
-    for(const[cat,list]of Object.entries(gr)){
-      h+=`<div class="cd"><h4>${window.catName(cat)} <span style="color:var(--t2);font-weight:400;font-size:.78em">(${list.length})</span></h4>`;
-      for(const x of list){h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:.82em;border-bottom:1px solid var(--brd)"><span style="font-family:monospace;font-weight:600">/${x.name}</span><label class="tg"><input type="checkbox" ${x.enabled?'checked':''} data-key="${x.key}" onchange="toggleCmd(this)"><span class="sl"></span></label></div>`}
+    $('cmdStats').textContent=en+'/'+c.length+' actives';
+    const gr={};for(const x of c){if(!gr[x.category])gr[x.category]=[];gr[x.category].push(x)}
+    let h='';for(const[list]of Object.entries(gr)){
+      h+='<div class="cmd-group"><h4>'+window.catName(list)+'</h4>';
+      for(const x of list)h+='<div class="cmd-row"><span>/'+x.name+'</span><label class="toggle"><input type="checkbox" '+(x.enabled?'checked':'')+' data-key="'+x.key+'" onchange="toggleCmd(this)"><span class="slider"></span></label></div>';
       h+='</div>';
     }
-    $('cmdsList').innerHTML=h||'<div class="emp">📭 Aucune commande</div>';
-  }catch(e){$('cmdsList').innerHTML='<div class="emp">❌ Erreur</div>'}
+    $('cmdsList').innerHTML=h||'<div class="empty">Aucune commande</div>';
+  }catch(e){$('cmdsList').innerHTML='<div class="empty">Erreur de chargement</div>'}
 }
 async function toggleCmd(el){
-  const k=el.dataset.key;
-  try{await window.api('/commands/toggle',{method:'PUT',body:JSON.stringify({key:k})});st('ok','✅ Modifié (enregistré localement)');loadCommands()}
-  catch(e){el.checked=!el.checked;st('bad','❌ Erreur')}
+  try{await window.api('/commands/toggle',{method:'PUT',body:JSON.stringify({key:el.dataset.key})});st('ok','Commande modifiée');loadCommands()}
+  catch(e){el.checked=!el.checked;st('bad','Erreur')}
 }
 
-// ---- TICKETS ----
+// Tickets
 async function loadTickets(){
   try{
     const d=await window.api('/tickets/recent?limit=50');
-    if(!d.tickets?.length){$('ticketsContent').innerHTML='<div class="emp">📭 Aucun ticket</div>';return}
-    let h='<div class="tw"><table><thead><tr><th>#</th><th>Utilisateur</th><th>Serveur</th><th>Statut</th><th>Date</th></tr></thead><tbody>';
+    if(!d.tickets||!d.tickets.length){$('ticketsContent').innerHTML='<div class="empty">Aucun ticket</div>';return}
+    let h='<div class="table-wrap"><table><thead><tr><th>#</th><th>Utilisateur</th><th>Serveur</th><th>Statut</th><th>Date</th></tr></thead><tbody>';
     for(const t of d.tickets){
-      const s=t.open?'<span class="bdg bdg-on">✅ Ouvert</span>':'<span class="bdg bdg-off">❌ Fermé</span>';
+      const s=t.open?'<span class="tag tag-on">Ouvert</span>':'<span class="tag tag-off">Fermé</span>';
       const dt=new Date(t.createdAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-      h+=`<tr><td>#${t.id}</td><td><code>${(t.userId||'?').slice(0,10)}…</code></td><td>${t.guildId?t.guildId.slice(0,8)+'…':'-'}</td><td>${s}</td><td>${dt}</td></tr>`;
+      h+='<tr><td>#'+t.id+'</td><td><code>'+(t.userId||'?').slice(0,10)+'…</code></td><td>'+(t.guildId?t.guildId.slice(0,8)+'…':'-')+'</td><td>'+s+'</td><td>'+dt+'</td></tr>';
     }
     h+='</tbody></table></div>';$('ticketsContent').innerHTML=h;
-  }catch(e){$('ticketsContent').innerHTML='<div class="emp">❌ Erreur</div>'}
+  }catch(e){$('ticketsContent').innerHTML='<div class="empty">Erreur</div>'}
 }
 
-// ---- CATÉGORIES ----
-async function loadCats(){
-  try{
-    const d=await window.api('/tickets/categories');const c=d.categories||[];
-    if(!c.length){$('catsContent').innerHTML='<div class="emp">📭 Aucune catégorie</div>';return}
-    let h='<div class="tw"><table><thead><tr><th>Emoji</th><th>Nom</th><th>Limite</th><th>Salon</th></tr></thead><tbody>';
-    for(const x of c){const ch=x.discordCategory?'<span class="bdg bdg-on">✅</span>':'<span class="bdg bdg-off">❌</span>';h+=`<tr><td style="font-size:1.2em">${x.emoji||'📁'}</td><td><strong>${window.esc(x.name)}</strong></td><td>${x.memberLimit||1}</td><td>${ch}</td></tr>`}
-    h+='</tbody></table></div>';$('catsContent').innerHTML=h;
-  }catch(e){$('catsContent').innerHTML='<div class="emp">❌ Erreur</div>'}
-}
-
-// ---- SERVEURS ----
+// Servers
 async function loadServers(){
   try{
     const gl=await window.api('/guilds');
-    if(!gl.length){$('srvContent').innerHTML='<div class="emp">📭 Aucun serveur</div>';return}
-    let h='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">';
-    for(const g of gl){h+=`<div class="cd" style="display:flex;align-items:center;gap:10px;padding:12px"><div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:1.4em;flex-shrink:0">🖥️</div><div style="flex:1;min-width:0"><div style="font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.9em">${window.esc(g.name)}</div><div style="color:var(--t2);font-size:.78em">👥 ${fmt(g.memberCount)} · 🎫 ${fmt(g.openTickets)} ouverts</div></div></div>`}
+    if(!gl.length){$('srvContent').innerHTML='<div class="empty">Aucun serveur</div>';return}
+    let h='<div class="server-grid">';
+    for(const g of gl)h+='<div class="detail-card" style="display:flex;align-items:center;gap:14px;padding:16px"><div class="srv-icon">🖥️</div><div><div class="srv-name">'+window.esc(g.name)+'</div><div class="srv-info">👥 '+fmt(g.memberCount)+' · 🎫 '+fmt(g.openTickets)+' ouverts</div></div></div>';
     h+='</div>';$('srvContent').innerHTML=h;
-  }catch(e){$('srvContent').innerHTML='<div class="emp">❌ Erreur</div>'}
+  }catch(e){$('srvContent').innerHTML='<div class="empty">Erreur</div>'}
 }
 
-// ---- LEVELING / ECONOMY ----
+// Leveling
 async function loadLeveling(){
   try{
     const d=await window.api('/leveling/leaderboard?limit=50');
-    if(!d.length){$('lvlContent').innerHTML='<div class="emp">📭 Aucun joueur</div>';$('ecoContent').innerHTML='<div class="emp">📭 Aucun joueur</div>';return}
-    let h='<div class="tw"><table><thead><tr><th>#</th><th>ID</th><th>Niveau</th><th>XP</th></tr></thead><tbody>';
-    for(const u of d){const m=u.rank===1?'🥇':u.rank===2?'🥈':u.rank===3?'🥉':`#${u.rank}`;h+=`<tr><td>${m}</td><td><code>${u.id.slice(0,12)}…</code></td><td>${u.level}</td><td>${fmt(u.xp)} XP</td></tr>`}
-    h+='</tbody></table></div>';
-    $('lvlContent').innerHTML=h;$('ecoContent').innerHTML=h;
-  }catch(e){$('lvlContent').innerHTML='<div class="emp">❌ Erreur</div>';$('ecoContent').innerHTML='<div class="emp">❌ Erreur</div>'}
+    if(!d.length){$('ecoContent').innerHTML='<div class="empty">Aucun joueur</div>';return}
+    let h='<div class="table-wrap"><table><thead><tr><th>#</th><th>ID</th><th>Niveau</th><th>XP</th></tr></thead><tbody>';
+    for(const u of d){const m=u.rank===1?'🥇':u.rank===2?'🥈':u.rank===3?'🥉':'#'+u.rank;h+='<tr><td>'+m+'</td><td><code>'+u.id.slice(0,12)+'…</code></td><td>'+u.level+'</td><td>'+fmt(u.xp)+' XP</td></tr>'}
+    h+='</tbody></table></div>';$('ecoContent').innerHTML=h;
+  }catch(e){$('ecoContent').innerHTML='<div class="empty">Erreur</div>'}
 }
 
-// ---- GIVEAWAYS ----
+// Giveaways
 async function loadGiveaways(){
   try{
     const d=await window.api('/giveaways/stats');
-    $('giveContent').innerHTML=`<div class="grid cols-2"><div class="cd"><h3>🎁 Giveaways</h3><div class="r"><span class="l">Actifs</span><span class="v">${fmt(d.active||0)}</span></div><div class="r"><span class="l">Terminés</span><span class="v">${fmt(d.ended||0)}</span></div><div class="r"><span class="l">Total</span><span class="v">${fmt(d.total||0)}</span></div></div></div>`;
-  }catch(e){$('giveContent').innerHTML='<div class="emp">❌ Erreur</div>'}
+    $('giveContent').innerHTML='<div class="detail-grid"><div class="detail-card"><h3>🎁 Giveaways</h3><div class="dr"><span>Actifs</span><span>'+fmt(d.active||0)+'</span></div><div class="dr"><span>Terminés</span><span>'+fmt(d.ended||0)+'</span></div><div class="dr"><span>Total</span><span>'+fmt(d.total||0)+'</span></div></div></div>';
+  }catch(e){$('giveContent').innerHTML='<div class="empty">Erreur</div>'}
 }
 
-// ---- MODÉRATION ----
+// Moderation
 async function loadModeration(){
   try{
     const d=await window.api('/moderation/stats');
-    $('modBans').textContent=fmt(d.totalCases||0);$('modMutes2').textContent=fmt(d.activeMutes||0);$('modWarns2').textContent=fmt(d.totalWarnings||0);
-    $('modActions').innerHTML=`<div class="r"><span class="l">Mutes actifs</span><span class="v">${fmt(d.activeMutes||0)}</span></div><div class="r"><span class="l">Avertissements</span><span class="v">${fmt(d.totalWarnings||0)}</span></div><div class="r"><span class="l">Strikes</span><span class="v">${fmt(d.totalStrikes||0)}</span></div>`;
+    $('modCases').textContent=fmt(d.totalCases||0);$('modMutes').textContent=fmt(d.activeMutes||0);$('modWarns').textContent=fmt(d.totalWarnings||0);$('modStrikes').textContent=fmt(d.totalStrikes||0);
   }catch(e){}
 }
 
-// ---- FUN / MUSIC ----
-function loadFun(){$('funContent').innerHTML=`<div class="cd"><h3>🎮 Statistiques Fun</h3><div class="r"><span class="l">Commandes fun</span><span class="v">28</span></div><div class="r"><span class="l">Images</span><span class="v">35</span></div><div class="r"><span class="l">Jeux</span><span class="v">10</span></div></div><div class="cd"><h3>🖼️ Images</h3><div class="r"><span class="l">Génération</span><span class="v">Canvas</span></div><div class="r"><span class="l">Filtres</span><span class="v">15</span></div></div>`}
-function loadMusic(){$('musicContent').innerHTML=`<div class="cd"><h3>🎵 Musique</h3><div class="r"><span class="l">Commandes</span><span class="v">17</span></div><div class="r"><span class="l">Plateformes</span><span class="v">YouTube, Spotify</span></div></div><div class="cd"><h3>🔊 Contrôles</h3><div class="r"><span class="l">Lecture</span><span class="v">play, stop, skip</span></div><div class="r"><span class="l">File</span><span class="v">queue, loop</span></div></div>`}
-
-// ---- CHAT (local) ----
-async function initChat(){loadConvs();if(chatInt)clearInterval(chatInt);chatInt=setInterval(()=>{if(chatUser)loadMsgs(chatUser,true)},3000)}
+// Chat
+let convs=[];
 function newConv(){
   const k=prompt('🔑 ID du membre (ex: 412345678901234567) :');if(!k)return;
   UID=k.trim();localStorage.setItem('chat_uid',UID);chatUser=UID;
@@ -351,82 +265,76 @@ function newConv(){
 async function loadConvs(){
   try{
     const d=await window.api('/chat/conversations',{headers:{'x-user-id':UID}});convs=d.conversations||[];
-    if(!convs.length){$('convList').innerHTML='<div class="emp">Aucune conversation</div>';return}
-    let h='';
-    for(const c of convs){
-      const inl=(c.username||c.userId).charAt(0).toUpperCase();
-      h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--brd)" onclick="selectChat('${c.userId}')"><div style="width:30px;height:30px;border-radius:50%;background:var(--p2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8em;color:#fff;flex-shrink:0">${inl}</div><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:.82em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${window.esc(c.username||c.userId)}</div><div style="font-size:.72em;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${window.esc(c.lastMessage||'')}</div></div></div>`;
+    if(!convs.length){$('convList').innerHTML='<div class="empty-sm">Aucune conversation</div>';return}
+    let h='';for(const c of convs){
+      h+='<div class="conv-item" onclick="selectChat(\''+c.userId+'\')"><div class="conv-avatar">'+(c.username||c.userId).charAt(0).toUpperCase()+'</div><div class="conv-info"><div class="conv-name">'+window.esc(c.username||c.userId)+'</div><div class="conv-last">'+window.esc(c.lastMessage||'')+'</div></div></div>';
     }
     $('convList').innerHTML=h;
   }catch(e){}
 }
-function selectChat(uid){chatUser=uid;$('chatUser').textContent='Membre '+uid.slice(-4);$('chatIn').value='';loadConvs();loadMsgs(uid)}
+function selectChat(uid){chatUser=uid;$('chatUser').textContent='Membre '+uid.slice(-4);$('chatIn').value='';loadMsgs(uid);loadConvs()}
 async function loadMsgs(uid,silent=false){
   try{
-    const d=await window.api(`/chat/messages/${uid}`,{headers:{'x-user-id':UID}});const ms=d.messages||[];
+    const d=await window.api('/chat/messages/'+uid,{headers:{'x-user-id':UID}});const ms=d.messages||[];
     const c=$('chatMsgs');
-    if(!ms.length){if(!silent)c.innerHTML='<div class="emp">💬 Écrivez à ce membre</div>';return}
-    let h='';
-    for(const m of ms){const dir=m.direction==='outgoing'?'outgoing':'incoming';const t=new Date(m.createdAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});h+=`<div style="max-width:75%;padding:8px 12px;border-radius:10px;font-size:.85em;word-wrap:break-word;align-self:${dir==='outgoing'?'flex-end':'flex-start'};background:${dir==='outgoing'?'linear-gradient(135deg,var(--p),var(--p2))':'rgba(255,255,255,.08)'};border-bottom-${dir==='outgoing'?'right':'left'}-radius:3px">${window.esc(m.content)}<div style="font-size:.65em;opacity:.6;margin-top:3px">${t}</div></div>`}
-    c.innerHTML=h;c.scrollTop=c.scrollHeight;$('chatDot').style.background='#2ecc71';
-  }catch(e){if(!silent)$('chatMsgs').innerHTML='<div class="emp">❌ Erreur</div>'}
+    if(!ms.length){if(!silent)c.innerHTML='<div class="empty-sm">Écrivez à ce membre</div>';return}
+    let h='';for(const m of ms){
+      const out=m.direction==='outgoing';
+      const t=new Date(m.createdAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+      h+='<div class="msg '+(out?'msg-out':'msg-in')+'">'+window.esc(m.content)+'<div class="msg-time">'+t+'</div></div>';
+    }
+    c.innerHTML=h;c.scrollTop=c.scrollHeight;$('chatDot').style.background='var(--ok)';
+  }catch(e){if(!silent)$('chatMsgs').innerHTML='<div class="empty-sm">Erreur</div>'}
 }
 async function sendChat(){
   const msg=$('chatIn').value.trim();if(!msg||!chatUser)return;$('chatIn').value='';
   try{
     await window.api('/chat/send',{method:'POST',headers:{'Content-Type':'application/json','x-user-id':UID},body:JSON.stringify({userId:chatUser,message:msg})});
     loadMsgs(chatUser);loadConvs();
-  }catch(e){st('bad','❌ '+e.message);$('chatIn').value=msg}
+  }catch(e){st('bad',e.message);$('chatIn').value=msg}
 }
 
-// ---- INVENTAIRE ----
+// Inventory
 async function showInventory(){
-  if(!SESSION_TOKEN){$('invLoginPrompt').style.display='block';$('invContent').style.display='none';return}
-  $('invLoginPrompt').style.display='none';$('invContent').style.display='block';
+  if(!SESSION_TOKEN){$('invLocked').style.display='block';$('invContent').style.display='none';return}
+  $('invLocked').style.display='none';$('invContent').style.display='block';
   try{
     const gl=await window.api('/guilds');const s=$('invGuildSel');s.innerHTML='';
-    for(const g of gl){s.innerHTML+=`<option value="${g.id}">${window.esc(g.name)}</option>`}
+    for(const g of gl)s.innerHTML+='<option value="'+g.id+'">'+window.esc(g.name)+'</option>';
     if(s.value)loadInventory();
-  }catch(e){$('invContent').innerHTML='<div class="emp">❌ Erreur chargement</div>'}
+  }catch(e){$('invContent').innerHTML='<div class="empty">Erreur</div>'}
 }
 async function loadInventory(){
-  const guildId=$('invGuildSel').value;if(!guildId){$('invDisplayed').innerHTML='<div class="emp">Choisis un serveur</div>';return}
+  const gid=$('invGuildSel').value;if(!gid)return;
   try{
-    const d=await window.apiRaw(IAPI,`/${guildId}/roles`);
-    renderRoleList('invDisplayed',d.displayed,'visible',guildId);
-    renderRoleList('invHidden',d.hidden,'hidden',guildId);
-    renderRoleList('invLocked',d.locked,'locked',guildId);
-    renderRoleList('invClaimable',d.claimable,'claimable',guildId);
-  }catch(e){st('bad','❌ '+e.message)}
+    const d=await window.apiRaw(IAPI,'/'+gid+'/roles');
+    renderRoles('invDisplayed',d.displayed,'visible',gid);
+    renderRoles('invHidden',d.hidden,'hidden',gid);
+    renderRoles('invLocked2',d.locked,'locked',gid);
+    renderRoles('invClaimable',d.claimable,'claimable',gid);
+  }catch(e){st('bad',e.message)}
 }
-function renderRoleList(id,roles,state,guildId){
-  const el=$(id);if(!roles||!roles.length){el.innerHTML='<div class="emp">Aucun</div>';return}
-  let html='<div style="display:flex;flex-wrap:wrap;gap:6px">';
+function renderRoles(id,roles,state,gid){
+  const el=$(id);if(!roles||!roles.length){el.innerHTML='<div class="empty-sm">Aucun</div>';return}
+  let h='<div class="role-list">';
   for(const r of roles){
-    const bg=r.color||'#555';
-    const isTog=(state==='visible'||state==='hidden');
-    const label=state==='visible'?'🙈 Masquer':(state==='hidden'?'👁️ Afficher':'');
-    html+=`<div style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--brd);font-size:.82em">
-      <span style="width:10px;height:10px;border-radius:50%;background:${bg};flex-shrink:0"></span>
-      <span style="font-weight:600">${window.esc(r.name)}</span>
-      <span style="font-size:.72em;color:var(--t2)">👥 ${r.memberCount}</span>
-      ${isTog?`<button class="btn btn-sm ${state==='visible'?'btn-bad':'btn-ok'}" onclick="toggleRoleVisibility('${guildId}','${r.id}')" style="padding:3px 8px;font-size:.78em">${label}</button>`:''}
-    </div>`;
+    const tog=state==='visible'||state==='hidden';
+    const label=state==='visible'?'🙈 Masquer':state==='hidden'?'👁️ Afficher':'';
+    h+='<div class="role-chip"><span class="role-dot" style="background:'+(r.color||'#555')+'"></span><span>'+window.esc(r.name)+'</span><span class="role-count">👥 '+r.memberCount+'</span>';
+    if(tog)h+='<button class="btn btn-ghost btn-sm" onclick="toggleRole(\''+gid+'\',\''+r.id+'\')" style="padding:3px 8px;font-size:.75em">'+label+'</button>';
+    h+='</div>';
   }
-  html+='</div>';el.innerHTML=html;
+  el.innerHTML=h+'</div>';
 }
-async function toggleRoleVisibility(guildId,roleId){
-  try{
-    const r=await window.apiRaw(IAPI,`/${guildId}/roles/${roleId}/visibility`,{method:'PUT'});
-    st('ok',`✅ ${r.action==='shown'?'Affiché':'Masqué'} • ${r.roleName}`);loadInventory();
-  }catch(e){st('bad','❌ '+e.message)}
+async function toggleRole(gid,rid){
+  try{const r=await window.apiRaw(IAPI,'/'+gid+'/roles/'+rid+'/visibility',{method:'PUT'});st('ok',r.roleName+(r.action==='shown'?' affiché':' masqué'));loadInventory()}
+  catch(e){st('bad',e.message)}
 }
 
-// ---- init ----
+// Init
 document.addEventListener('DOMContentLoaded',async()=>{
   await checkSession();updateAuthUI();
-  if(!SESSION_TOKEN){window.notify('🔒 Connecte-toi depuis la page d’accueil pour débloquer toutes les fonctionnalités.','info')}
-  loadOverview();loadCommands();loadTickets();loadCats();loadServers();loadLeveling();loadGiveaways();loadModeration();loadFun();loadMusic();
+  loadOverview();loadCommands();loadTickets();loadServers();loadLeveling();loadGiveaways();loadModeration();
   setInterval(loadOverview,30000);
 });
 </script>

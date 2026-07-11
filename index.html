@@ -3,225 +3,354 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𝓼ιмρℓє — Communauté</title>
+<meta name="description" content="𝓼ιмρℓє — Le bot ultime pour ta communauté Discord. Modération, économie, casino, XP, tickets et IA.">
+<meta name="theme-color" content="#9933ff">
+<title>𝓼ιмρℓє — Bot Discord</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
 <div class="bg-glow g1"></div>
 <div class="bg-glow g2"></div>
 <div class="bg-glow g3"></div>
 
-<nav>
-  <div class="brand"><span>⚡</span> 𝓼ιмρℓє</div>
-  <div class="nav-links">
-    <a href="#features">Fonctionnalités</a>
-    <a href="#ranks">Rangs</a>
-    <a href="#login">Connexion</a>
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a class="brand" href="#"><span>⚡</span> 𝓼ιмρℓє</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#features">Fonctionnalités</a>
+      <a href="#commands">Commandes</a>
+      <a href="#ranks">Rangs</a>
+      <a href="dashboard.html" class="nav-btn">Dashboard</a>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <button class="nav-login" onclick="document.getElementById('login').scrollIntoView({behavior:'smooth'})">Connexion</button>
-  <button class="mobile-menu" onclick="document.getElementById('login').scrollIntoView({behavior:'smooth'})">☰</button>
 </nav>
 
 <section class="hero">
-  <div class="hero-badge"><span class="dot"></span> En ligne — Version 2.0</div>
-  <h1>𝓼ιмρℓє</h1>
-  <p class="tagline">Le bot <b>ultime</b> pour ta communauté Discord. Modération, économie, casino, XP, tickets et bien plus — le tout propulsé par <b>l'intelligence artificielle</b>.</p>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-badge"><span class="pulse"></span> En ligne — v2.0</div>
+  <h1 class="hero-title">𝓼ιмρℓє</h1>
+  <p class="hero-sub">Le bot <b>ultime</b> pour ta communauté Discord.<br>Modération, économie, casino, XP, tickets — propulsé par <b>l'IA</b>.</p>
   <div class="hero-btns">
-    <button class="btn btn-primary" onclick="window.open('https://discord.com/oauth2/authorize?client_id=1513286724183130122&scope=bot+applications.commands&permissions=8','_blank')">🚀 Inviter le Bot</button>
-    <button class="btn btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Découvrir ↓</button>
+    <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1513286724183130122&scope=bot+applications.commands&permissions=8" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+      Inviter le Bot
+    </a>
+    <a class="btn btn-outline" href="#features">Découvrir ↓</a>
+  </div>
+  <div class="hero-scroll" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
   </div>
 </section>
 
 <div class="stats-bar">
-  <div class="stat"><div class="num">150+</div><div class="lbl">Commandes</div></div>
-  <div class="stat"><div class="num">18K+</div><div class="lbl">Utilisateurs</div></div>
-  <div class="stat"><div class="num">99.9%</div><div class="lbl">Uptime</div></div>
-  <div class="stat"><div class="num">24/7</div><div class="lbl">Support</div></div>
+  <div class="stat" data-target="150"><div class="stat-num">0</div><div class="stat-label">Commandes</div></div>
+  <div class="stat" data-target="18000"><div class="stat-num">0</div><div class="stat-label">Utilisateurs</div></div>
+  <div class="stat" data-target="99"><div class="stat-num">0</div><div class="stat-label">Uptime %</div></div>
+  <div class="stat" data-target="24"><div class="stat-num">0</div><div class="stat-label">Support 7j/7</div></div>
 </div>
 
 <section id="features">
-  <div class="section-title">
-    <h2>Fonctionnalités <span>Puissantes</span></h2>
-    <p>Tout ce dont ta communauté a besoin, en un seul bot.</p>
+  <div class="section-head">
+    <div class="section-badge">Fonctionnalités</div>
+    <h2>Tout ce dont tu as <span>besoin</span></h2>
+    <p>Un bot complet pour gérer, divertir et développer ta communauté.</p>
   </div>
-  <div class="grid cols-auto">
-    <div class="card"><div class="ico">🛡️</div><h3>Modération Avancée</h3><p>Système complet avec warns, mutes, bans, auto-mod et logs détaillés.</p></div>
-    <div class="card"><div class="ico">💰</div><h3>Économie</h3><p>Daily, work, shop, trades et un marché dynamique entre membres.</p></div>
-    <div class="card"><div class="ico">🎰</div><h3>Casino</h3><p>Slots, roulette, blackjack — gagne des pièces et escalade le leaderboard.</p></div>
-    <div class="card"><div class="ico">⭐</div><h3>Système XP</h3><p>Gagne de l'XP en parlant, monte de niveau et débloque des récompenses.</p></div>
-    <div class="card"><div class="ico">🎫</div><h3>Tickets</h3><p>Système de support avec catégories, archives et gestion des staffs.</p></div>
-    <div class="card"><div class="ico">🤖</div><h3>Intelligence Artificielle</h3><p>Assistant IA intégré pour répondre aux questions et générer du contenu.</p></div>
-    <div class="card"><div class="ico">🎵</div><h3>Music</h3><p>Lecteur musical avec file d'attente, playlist et qualité audio optimisée.</p></div>
-    <div class="card"><div class="ico">📊</div><h3>Dashboard Complet</h3><p>Panneau de contrôle web pour gérer le bot et voir les stats en direct.</p></div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#e74c3c">🛡️</div>
+      <h3>Modération</h3>
+      <p>Warns, mutes, bans, auto-mod, logs — contrôle total sur ton serveur.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#f39c12">💰</div>
+      <h3>Économie</h3>
+      <p>Daily, work, shop, trades — un marché dynamique entre membres.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#e91e63">🎰</div>
+      <h3>Casino</h3>
+      <p>Slots, roulette, blackjack — gagne des pièces et monte au leaderboard.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#9b59b6">⭐</div>
+      <h3>Système XP</h3>
+      <p>Gagne de l'XP en parlant, monte de niveau, débloque des récompenses.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#2ecc71">🎫</div>
+      <h3>Tickets</h3>
+      <p>Support avec catégories, archives et gestion des staffs intégrée.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#3498db">🤖</div>
+      <h3>Intelligence Artificielle</h3>
+      <p>Assistant IA intégré — répond aux questions et génère du contenu.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#1abc9c">🎵</div>
+      <h3>Musique</h3>
+      <p>Lecteur musical, file d'attente, playlists — YouTube, Spotify.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="--accent:#e67e22">📊</div>
+      <h3>Dashboard</h3>
+      <p>Panneau de contrôle web pour gérer le bot et voir les stats en direct.</p>
+    </div>
   </div>
+</section>
+
+<section id="commands">
+  <div class="section-head">
+    <div class="section-badge">Commandes</div>
+    <h2>+150 <span>commandes</span></h2>
+    <p>Explore toutes les commandes disponibles par catégorie.</p>
+  </div>
+  <div class="cmd-search">
+    <input type="text" id="cmdSearch" placeholder="Rechercher une commande..." oninput="filterCmds(this.value)">
+  </div>
+  <div id="cmdGrid" class="cmd-grid"></div>
 </section>
 
 <section id="ranks">
-  <div class="section-title">
-    <h2>Rangs <span>& Permissions</span></h2>
+  <div class="section-head">
+    <div class="section-badge">Rangs</div>
+    <h2>Système de <span>permissions</span></h2>
     <p>Chaque rang donne accès à des fonctionnalités exclusives.</p>
   </div>
-  <div class="grid cols-2">
-    <div class="card"><div class="ico">🌟</div><h3>Super Admin</h3><p>Accès total au système et configuration serveur.</p></div>
-    <div class="card"><div class="ico">👑</div><h3>Owner / Co-Owner</h3><p>Administration complète et override permissions.</p></div>
-    <div class="card"><div class="ico">🔧</div><h3>Développeur</h3><p>Accès aux configs techniques et logs avancés.</p></div>
-    <div class="card"><div class="ico">🛡️</div><h3>Admin</h3><p>Modération étendue et gestion des rôles.</p></div>
-    <div class="card"><div class="ico">🟢</div><h3>Modérateur</h3><p>Warn, mute, kick et gestion des tickets.</p></div>
-    <div class="card"><div class="ico">💎</div><h3>VIP</h3><p>Accès salon VIP et commandes exclusives.</p></div>
+  <div class="ranks-grid">
+    <div class="rank-card" style="--rc:#ffd700"><div class="rank-emoji">🌟</div><h4>Super Admin</h4><p>Accès total au système</p></div>
+    <div class="rank-card" style="--rc:#ffd700"><div class="rank-emoji">👑</div><h4>Owner</h4><p>Administration complète</p></div>
+    <div class="rank-card" style="--rc:#3498db"><div class="rank-emoji">🔧</div><h4>Développeur</h4><p>Configs techniques</p></div>
+    <div class="rank-card" style="--rc:#e74c3c"><div class="rank-emoji">🛡️</div><h4>Admin</h4><p>Modération étendue</p></div>
+    <div class="rank-card" style="--rc:#2ecc71"><div class="rank-emoji">🟢</div><h4>Modérateur</h4><p>Warn, mute, kick</p></div>
+    <div class="rank-card" style="--rc:#9b59b6"><div class="rank-emoji">💎</div><h4>VIP</h4><p>Commandes exclusives</p></div>
   </div>
 </section>
 
-<section class="login-section" id="login">
+<section id="login" class="login-section">
   <div class="login-wrapper">
-    <div class="login-card" id="loginCard">
-      <h2>🔐 Connexion au Dashboard</h2>
-      <div class="error" id="errorMsg"></div>
-      <div class="success" id="successMsg"></div>
+    <div class="login-card">
+      <div class="login-glow"></div>
+      <h2>Connexion au Dashboard</h2>
+
+      <div class="alert error" id="errorMsg"></div>
+      <div class="alert success" id="successMsg"></div>
 
       <div class="user-info" id="userInfo">
-        <div class="avatar" id="userAvatar"></div>
-        <div class="name" id="userName"></div>
-        <div class="level" id="userLevel"></div>
-        <div class="badge" id="userBadge"></div>
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-name" id="userName">-</div>
+        <div class="user-level" id="userLevel">-</div>
+        <div class="user-badge" id="userBadge">-</div>
       </div>
 
-      <div id="loginForm">
+      <form id="loginForm" onsubmit="event.preventDefault();doLogin()">
         <div class="field">
           <label>ID Discord</label>
-          <input type="text" id="userId" placeholder="123456789012345678" autocomplete="off">
+          <input type="text" id="userId" placeholder="123456789012345678" autocomplete="off" required>
         </div>
         <div class="field">
-          <label>Mot de passe (optionnel)</label>
-          <input type="password" id="password" placeholder="Optionnel en mode démo">
+          <label>Mot de passe <span class="optional">(optionnel)</span></label>
+          <input type="password" id="password" placeholder="Laisse vide en mode démo">
         </div>
         <div class="field">
-          <label>URL du bot (optionnel)</label>
+          <label>URL du bot API <span class="optional">(optionnel)</span></label>
           <input type="text" id="botUrl" placeholder="https://ton-bot.com" autocomplete="off" onchange="window.setApiBase(this.value)">
-          <div style="font-size:.72em;color:var(--t2);margin-top:4px">Laisse vide pour le mode démo (100% fonctionnel sans backend).</div>
+          <div class="field-hint">Laisse vide = mode démo 100% fonctionnel.</div>
         </div>
-        <button class="btn btn-primary" id="loginBtn" onclick="doLogin()" style="width:100%">
-          <div class="spinner"></div><span>🔑 Se connecter</span>
+        <button class="btn btn-primary btn-full" id="loginBtn" type="submit">
+          <div class="spinner"></div><span>Se connecter</span>
         </button>
-        <div class="divider">ou</div>
-        <button class="btn btn-g" onclick="quickAccess()" style="width:100%">⚡ Accès rapide (sans mot de passe)</button>
+        <div class="divider"><span>ou</span></div>
+        <button type="button" class="btn btn-ghost btn-full" onclick="quickAccess()">Accès rapide (sans mot de passe)</button>
+      </form>
+
+      <div id="dashPanel" style="display:none">
+        <button class="btn btn-success btn-full" onclick="goDashboard()">Accéder au Dashboard</button>
+        <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="doLogout()">Déconnexion</button>
       </div>
 
-      <div id="dashboardAccess" style="display:none">
-        <button class="btn btn-ok" id="dashBtn" onclick="goDashboard()" style="width:100%">📊 Accéder au Dashboard</button>
-        <div style="margin-top:12px;text-align:center">
-          <button class="btn btn-g" onclick="doLogout()" style="width:auto;display:inline-flex">🚪 Déconnexion</button>
-        </div>
-      </div>
-
-      <div class="perm-denied" id="permDenied">
-        <div style="font-size:2em;margin-bottom:8px">🔒</div>
-        <div><b>Accès refusé</b></div>
-        <div style="margin-top:4px;font-size:.82em">Tu as besoin du niveau 2 minimum pour accéder au dashboard.</div>
+      <div id="permDenied" style="display:none">
+        <div class="perm-icon">🔒</div>
+        <div class="perm-title">Accès refusé</div>
+        <div class="perm-text">Niveau 2 minimum requis pour le dashboard.</div>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-content">
-    <div class="brand" style="font-size:1.3em;font-weight:800">⚡ 𝓼ιмρℓє</div>
-    <div class="footer-links">
-      <a href="#features">Fonctionnalités</a>
-      <a href="#ranks">Rangs</a>
-      <a href="#login">Connexion</a>
-      <a href="https://github.com/bakakauwu0-star/sitewebsimplee" target="_blank">GitHub</a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span>⚡</span> 𝓼ιмρℓє</div>
+      <div class="footer-links">
+        <a href="#features">Fonctionnalités</a>
+        <a href="#commands">Commandes</a>
+        <a href="#ranks">Rangs</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="https://github.com/bakakauwu0-star/sitewebsimplee" target="_blank">GitHub</a>
+      </div>
     </div>
-    <div class="footer-status"><span class="dot"></span> Tous les systèmes opérationnels</div>
-    <div class="footer-copy">© 2026 𝓼ιмρℓє — Propulsé avec ❤️ par la communauté</div>
+    <div class="footer-bottom">
+      <span class="footer-status"><span class="pulse"></span> Tous les systèmes opérationnels</span>
+      <span class="footer-copy">© 2026 𝓼ιмρℓє — Propulsé par la communauté</span>
+    </div>
   </div>
 </footer>
 
+<div class="banner" id="banner"></div>
+
 <script src="app.js"></script>
 <script>
-const SESSION = { token: localStorage.getItem('session_token') || '', user: null, perms: null };
+const SESSION={token:localStorage.getItem('session_token')||'',user:null,perms:null};
+const $=id=>document.getElementById(id);
 
-function $(id){ return document.getElementById(id); }
-function setError(m){ $('errorMsg').textContent = m; $('errorMsg').classList.add('show'); $('successMsg').classList.remove('show'); }
-function setSuccess(m){ $('successMsg').textContent = m; $('successMsg').classList.add('show'); $('errorMsg').classList.remove('show'); }
-function clearMsgs(){ $('errorMsg').classList.remove('show'); $('successMsg').classList.remove('show'); }
+function setError(m){$('errorMsg').textContent=m;$('errorMsg').classList.add('show');$('successMsg').classList.remove('show')}
+function setSuccess(m){$('successMsg').textContent=m;$('successMsg').classList.add('show');$('errorMsg').classList.remove('show')}
+function clearMsgs(){$('errorMsg').classList.remove('show');$('successMsg').classList.remove('show')}
+function toggle(el,v){el.style.display=v?'block':'none'}
 
-function updateUI() {
-  const loggedIn = !!(SESSION.token && SESSION.user && SESSION.perms);
-  if (loggedIn && SESSION.perms.canAccessDashboard) {
-    show('loginForm', false); show('permDenied', false); show('userInfo', true); show('dashboardAccess', true);
-    const b = window.getBadgeForLevel(SESSION.perms.permLevel);
-    $('userAvatar').textContent = (SESSION.user.id || '?').charAt(0).toUpperCase();
-    $('userName').textContent = (SESSION.user.id || 'Inconnu').slice(0, 16) + '…';
-    $('userLevel').textContent = `Niveau XP: ${SESSION.perms.xpLevel} • ${SESSION.perms.permName}`;
-    $('userBadge').textContent = `${b.emoji} ${b.name}`;
-    $('userBadge').style.background = b.color + '22'; $('userBadge').style.color = b.color;
-  } else if (loggedIn) {
-    show('loginForm', false); show('dashboardAccess', false); show('userInfo', true); show('permDenied', true);
-    const b = window.getBadgeForLevel(SESSION.perms.permLevel);
-    $('userAvatar').textContent = (SESSION.user.id || '?').charAt(0).toUpperCase();
-    $('userName').textContent = (SESSION.user.id || 'Inconnu').slice(0, 16) + '…';
-    $('userBadge').textContent = `${b.emoji} ${b.name}`;
-  } else {
-    show('loginForm', true); show('dashboardAccess', false); show('permDenied', false); show('userInfo', false);
+function updateUI(){
+  const logged=!!(SESSION.token&&SESSION.user&&SESSION.perms);
+  toggle($('loginForm'),!logged);
+  toggle($('dashPanel'),false);
+  toggle($('permDenied'),false);
+  toggle($('userInfo'),false);
+  if(logged&&SESSION.perms.canAccessDashboard){
+    toggle($('userInfo'),true);toggle($('dashPanel'),true);
+    const b=window.getBadgeForLevel(SESSION.perms.permLevel);
+    $('userAvatar').textContent=(SESSION.user.id||'?').charAt(0).toUpperCase();
+    $('userName').textContent=SESSION.user.id||'Inconnu';
+    $('userLevel').textContent='Niveau XP: '+SESSION.perms.xpLevel+' • '+SESSION.perms.permName;
+    $('userBadge').textContent=b.emoji+' '+b.name;
+    $('userBadge').style.cssText='background:'+b.color+'22;color:'+b.color;
+  }else if(logged){
+    toggle($('userInfo'),true);toggle($('permDenied'),true);
+    const b=window.getBadgeForLevel(SESSION.perms.permLevel);
+    $('userAvatar').textContent=(SESSION.user.id||'?').charAt(0).toUpperCase();
+    $('userName').textContent=SESSION.user.id||'Inconnu';
+    $('userBadge').textContent=b.emoji+' '+b.name;
+    $('userBadge').style.cssText='background:'+b.color+'22;color:'+b.color;
   }
 }
-function show(id, v){ $(id).style.display = v ? 'block' : 'none'; }
 
-async function doLogin() {
-  const userId = $('userId').value.trim();
-  if (!userId) { setError('ID Discord requis'); return; }
+async function doLogin(){
+  const uid=$('userId').value.trim();
+  if(!uid){setError('ID Discord requis');return}
   clearMsgs();
-  const btn = $('loginBtn'); btn.classList.add('loading'); btn.disabled = true;
-  try {
-    const r = await window.authCall('/login', { userId, password: $('password').value.trim() || 'none' });
-    SESSION.token = r.token; SESSION.user = r.user; SESSION.perms = r.profile;
-    localStorage.setItem('session_token', r.token);
-    localStorage.setItem('permissionLevel', r.permissionLevel || 0);
-    localStorage.setItem('permissionName', r.permissionName || 'Membre');
-    setSuccess('Connexion réussie !'); setTimeout(updateUI, 300);
-  } catch (e) { setError(e.message || 'Erreur de connexion'); }
-  finally { btn.classList.remove('loading'); btn.disabled = false; }
+  const btn=$('loginBtn');btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await window.authCall('/login',{userId:uid,password:$('password').value.trim()||'none'});
+    SESSION.token=r.token;SESSION.user=r.user;SESSION.perms=r.profile;
+    localStorage.setItem('session_token',r.token);
+    setSuccess('Connexion réussie !');setTimeout(updateUI,300);
+  }catch(e){setError(e.message||'Erreur de connexion')}
+  finally{btn.classList.remove('loading');btn.disabled=false}
 }
 
-async function quickAccess() {
-  const userId = $('userId').value.trim();
-  if (!userId) { setError('ID Discord requis'); return; }
+async function quickAccess(){
+  const uid=$('userId').value.trim();
+  if(!uid){setError('ID Discord requis');return}
   clearMsgs();
-  const btn = $('loginBtn'); btn.classList.add('loading'); btn.disabled = true;
-  try {
-    const r = await window.authCall('/login', { userId, password: 'none' });
-    SESSION.token = r.token; SESSION.user = r.user; SESSION.perms = r.profile;
-    localStorage.setItem('session_token', r.token);
-    localStorage.setItem('permissionLevel', r.permissionLevel || 0);
-    localStorage.setItem('permissionName', r.permissionName || 'Membre');
-    setSuccess('Connecté !'); setTimeout(updateUI, 300);
-  } catch (e) { setError(e.message || 'ID inconnu'); }
-  finally { btn.classList.remove('loading'); btn.disabled = false; }
+  const btn=$('loginBtn');btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await window.authCall('/login',{userId:uid,password:'none'});
+    SESSION.token=r.token;SESSION.user=r.user;SESSION.perms=r.profile;
+    localStorage.setItem('session_token',r.token);
+    setSuccess('Connecté !');setTimeout(updateUI,300);
+  }catch(e){setError(e.message||'ID inconnu')}
+  finally{btn.classList.remove('loading');btn.disabled=false}
 }
 
-function doLogout() {
-  SESSION.token = ''; SESSION.user = null; SESSION.perms = null;
-  localStorage.removeItem('session_token'); localStorage.removeItem('permissionLevel'); localStorage.removeItem('permissionName');
-  clearMsgs(); updateUI();
-  $('userId').value = ''; $('password').value = '';
+function doLogout(){
+  SESSION.token='';SESSION.user=null;SESSION.perms=null;
+  localStorage.removeItem('session_token');
+  clearMsgs();updateUI();
+  $('userId').value='';$('password').value='';
 }
 
-function goDashboard(){ window.location.href = 'dashboard.html'; }
+function goDashboard(){window.location.href='dashboard.html'}
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.getApiBase) $('botUrl').value = window.getApiBase();
-  if (SESSION.token) {
-    // restore a session from storage (demo-friendly)
-    try {
-      const lvl = parseInt(localStorage.getItem('permissionLevel')) || 0;
-      SESSION.user = { id: (localStorage.getItem('session_token') || '').replace('demo-', '').split('-')[0] || 'Inconnu' };
-      SESSION.perms = window.deriveProfile(SESSION.user.id);
-      updateUI();
-    } catch (e) { updateUI(); }
-  } else updateUI();
+// Commands display
+const ALL_CMDS=[
+  {n:'ping',c:'moderation'},{n:'ban',c:'moderation'},{n:'kick',c:'moderation'},{n:'mute',c:'moderation'},
+  {n:'warn',c:'moderation'},{n:'clear',c:'moderation'},{n:'slowmode',c:'moderation'},{n:'lock',c:'moderation'},
+  {n:'unlock',c:'moderation'},{n:'purge',c:'moderation'},
+  {n:'daily',c:'economy'},{n:'work',c:'economy'},{n:'pay',c:'economy'},{n:'balance',c:'economy'},
+  {n:'shop',c:'economy'},{n:'buy',c:'economy'},{n:'sell',c:'economy'},{n:'inventory',c:'economy'},
+  {n:'slots',c:'casino'},{n:'roulette',c:'casino'},{n:'blackjack',c:'casino'},{n:'coinflip',c:'casino'},
+  {n:'rank',c:'leveling'},{n:'leaderboard',c:'leveling'},{n:'xp',c:'leveling'},{n:'setlevel',c:'leveling'},
+  {n:'play',c:'music'},{n:'skip',c:'music'},{n:'queue',c:'music'},{n:'stop',c:'music'},{n:'pause',c:'music'},{n:'resume',c:'music'},
+  {n:'help',c:'information'},{n:'stats',c:'information'},{n:'botinfo',c:'information'},{n:'ping',c:'information'},
+  {n:'ticket',c:'tickets'},{n:'close',c:'tickets'},{n:'claim',c:'tickets'},{n:'addrole',c:'tickets'},
+  {n:'say',c:'utility'},{n:'avatar',c:'images'},{n:'cat',c:'images'},{n:'meme',c:'images'},
+  {n:'8ball',c:'fun'},{n:'meme',c:'fun'},{n:'roll',c:'fun'},{n:'rps',c:'fun'},
+  {n:'giveaway',c:'giveaway'},{n:'reroll',c:'giveaway'},
+  {n:'poll',c:'community'},{n:'suggest',c:'community'},{n:'welcome',c:'welcome'},
+  {n:'autorole',c:'roles'},{n:'reactionrole',c:'roles'},{n:'setrank',c:'admin'},
+  {n:'config',c:'configuration'},{n:'reload',c:'admin'},{n:'backup',c:'admin'},
+  {n:'afk',c:'afk'},{n:'birthday',c:'birthdays'},
+];
+const CAT_NAMES={moderation:'🛡️ Modération',economy:'💰 Économie',casino:'🎰 Casino',leveling:'⭐ Niveaux',music:'🎵 Musique',information:'ℹ️ Information',tickets:'🎫 Tickets',utility:'🔧 Utilitaire',images:'🖼️ Images',fun:'🎉 Fun',giveaway:'🎁 Giveaway',community:'👥 Communauté',welcome:'👋 Bienvenue',roles:'🔰 Rôles',admin:'👑 Admin',configuration:'⚙️ Configuration',afk:'💤 AFK',birthdays:'🎂 Anniversaires'};
+
+function renderCmds(filter){
+  const g={};
+  ALL_CMDS.forEach(c=>{
+    if(filter&&!c.n.includes(filter.toLowerCase())&&!c.c.includes(filter.toLowerCase()))return;
+    if(!g[c.c])g[c.c]=[];
+    if(!g[c.c].includes(c.n))g[c.c].push(c.n);
+  });
+  let h='';
+  for(const[c,cmds]of Object.entries(g)){
+    h+='<div class="cmd-category"><div class="cmd-cat-title">'+(CAT_NAMES[c]||c)+'</div><div class="cmd-list">';
+    cmds.forEach(n=>h+='<div class="cmd-item">/'+n+'</div>');
+    h+='</div></div>';
+  }
+  $('cmdGrid').innerHTML=h||'<div class="empty">Aucune commande trouvée</div>';
+}
+function filterCmds(v){renderCmds(v)}
+
+// Stats counter animation
+function animateCounters(){
+  document.querySelectorAll('.stat[data-target]').forEach(el=>{
+    const target=+el.dataset.target;
+    const num=el.querySelector('.stat-num');
+    let current=0;
+    const step=Math.max(1,Math.floor(target/60));
+    const timer=setInterval(()=>{
+      current+=step;
+      if(current>=target){current=target;clearInterval(timer)}
+      num.textContent=current.toLocaleString('fr-FR')+(target>=100?'+':'');
+    },30);
+  });
+}
+
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  $('mainNav').classList.toggle('scrolled',window.scrollY>50);
 });
-$('password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-$('userId').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{
+  if(window.getApiBase)$('botUrl').value=window.getApiBase();
+  renderCmds('');
+  animateCounters();
+  if(SESSION.token){
+    try{
+      SESSION.user={id:(SESSION.token||'').replace('demo-','').split('-')[0]||'Inconnu'};
+      SESSION.perms=window.deriveProfile(SESSION.user.id);
+      updateUI();
+    }catch(e){updateUI()}
+  }else updateUI();
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
+  document.querySelectorAll('.feature-card,.rank-card,.cmd-category').forEach(el=>obs.observe(el));
+});
+$('password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+$('userId').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 </script>
 </body>
 </html>
