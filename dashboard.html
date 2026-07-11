@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>𝓼ιмρℓє — Panneau de Contrôle</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#9933ff;--p2:#7a1fd1;--s:#ff3399;--ok:#2ecc71;--bad:#e74c3c;--warn:#f39c12;--bg:#0d0d1a;--glass:rgba(255,255,255,0.06);--gh:rgba(255,255,255,0.10);--card:rgba(255,255,255,0.04);--brd:rgba(255,255,255,0.08);--t:#f0f0f0;--t2:#aaa;--r:14px}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden}
+.layout{display:flex;height:100vh}
+.sidebar{width:220px;background:var(--card);border-right:1px solid var(--brd);padding:16px 10px;flex-shrink:0;overflow-y:auto}
+.sidebar h1{font-size:1.1em;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;text-align:center;padding:4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:all .2s;color:var(--t2);font-weight:500;font-size:.85em}
+.nav-item:hover{background:rgba(153,51,255,0.1);color:var(--t)}
+.nav-item.active{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}
+.nav-group{margin:8px 0 4px;padding:4px 12px;font-size:.7em;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.main{flex:1;overflow-y:auto;padding:20px}
+.page{display:none}
+.page.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.sc{background:var(--card);border-radius:10px;padding:14px 10px;text-align:center;border:1px solid var(--brd);transition:all .2s}
+.sc:hover{transform:translateY(-2px);background:var(--gh)}
+.sc .ico{font-size:1.3em;margin-bottom:2px}
+.sc .val{font-size:1.3em;font-weight:800;color:var(--p)}
+.sc .lbl{font-size:.75em;color:var(--t2)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:16px}
+.cd{background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--brd)}
+.cd h3{font-size:.95em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.r{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--brd);font-size:.85em}
+.r:last-child{border-bottom:none}
+.r .l{color:var(--t2)}.r .v{font-weight:600}
+.tw{overflow-x:auto;border-radius:10px;border:1px solid var(--brd)}
+table{width:100%;border-collapse:collapse;background:var(--card)}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--brd);font-size:.85em}
+th{background:rgba(153,51,255,0.08);color:var(--p);font-weight:600;font-size:.75em;text-transform:uppercase}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.bdg{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.72em;font-weight:600}
+.bdg-on{background:rgba(46,204,113,0.2);color:#2ecc71}
+.bdg-off{background:rgba(231,76,60,0.2);color:#e74c3c}
+.bdg-warn{background:rgba(243,156,18,0.2);color:#f39c12}
+.tg{position:relative;display:inline-block;width:36px;height:18px;cursor:pointer}
+.tg input{display:none}
+.tg .sl{position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:18px;transition:all .3s}
+.tg .sl::before{content:'';position:absolute;width:14px;height:14px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:all .3s}
+.tg input:checked+.sl{background:var(--p)}
+.tg input:checked+.sl::before{transform:translateX(18px)}
+.btn{padding:6px 12px;border:none;border-radius:7px;font-size:.8em;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:4px}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}
+.btn-p:hover{opacity:.85}
+.btn-bad{background:rgba(231,76,60,0.2);color:#e74c3c}
+.btn-bad:hover{background:rgba(231,76,60,0.3)}
+.btn-ok{background:rgba(46,204,113,0.2);color:#2ecc71}
+.btn-ok:hover{background:rgba(46,204,113,0.3)}
+.btn-g{background:transparent;color:var(--t2);border:1px solid var(--brd)}
+.btn-g:hover{background:var(--gh);color:var(--t)}
+.emp{text-align:center;padding:30px;color:var(--t2)}
+.load{text-align:center;padding:30px;color:var(--t2);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center}
+.modal.active{display:flex}
+.modal-inner{background:#1a1a2e;border-radius:var(--r);padding:22px;max-width:460px;width:90%;border:1px solid var(--brd);max-height:80vh;overflow-y:auto}
+.modal-inner h2{margin-bottom:12px;font-size:1.1em}
+.modal-inner label{display:block;margin-bottom:3px;font-size:.82em;color:var(--t2)}
+.modal-inner input,.modal-inner textarea,.modal-inner select{width:100%;padding:7px 10px;border-radius:7px;border:1px solid var(--brd);background:rgba(255,255,255,0.05);color:var(--t);font-size:.88em;margin-bottom:10px;outline:none;font-family:inherit}
+.modal-inner input:focus,.modal-inner textarea:focus{border-color:var(--p)}
+.modal-inner textarea{min-height:60px;resize:vertical}
+.bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.sel{padding:7px 10px;border-radius:7px;border:1px solid var(--brd);background:var(--card);color:var(--t);font-size:.85em;outline:none;min-width:160px}
+.in{padding:7px 10px;border-radius:7px;border:1px solid var(--brd);background:rgba(255,255,255,0.05);color:var(--t);font-size:.85em;outline:none}
+#sb{display:none;padding:8px 14px;border-radius:8px;margin-bottom:12px;font-size:.85em}
+#sb.bad{display:block;background:rgba(231,76,60,0.15);color:#ff6b6b;border:1px solid rgba(231,76,60,0.25)}
+#sb.ok{display:block;background:rgba(46,204,113,0.15);color:#2ecc71;border:1px solid rgba(46,204,113,0.25)}
+@media(max-width:768px){.sidebar{width:50px;font-size:0}.sidebar h1{font-size:0}.nav-item{justify-content:center;padding:8px}.main{padding:12px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar">
+<h1>⚡ 𝓼ιмρℓє</h1>
+<div id="authStatus" style="text-align:center;padding:4px 8px;margin-bottom:8px;font-size:.75em;border-radius:8px;background:var(--glass)">🔒 <span id="authLabel">Non connecté</span></div>
+<div class="nav-group">Général</div>
+<div class="nav-item active" data-page="overview">📊 Tableau de bord</div>
+<div class="nav-item" data-page="commands">⚙️ Commandes</div>
+<div class="nav-item" data-page="chat">💬 Chat</div>
+<div class="nav-group">Gestion</div>
+<div class="nav-item" data-page="inventory">🎒 Inventaire</div>
+<div class="nav-item" data-page="tickets">🎫 Tickets</div>
+<div class="nav-item" data-page="categories">📂 Catégories</div>
+<div class="nav-item" data-page="servers">🖥️ Serveurs</div>
+<div class="nav-group">Économie</div>
+<div class="nav-item" data-page="economy">💰 Économie</div>
+<div class="nav-item" data-page="giveaway">🎁 Giveaways</div>
+<div class="nav-item" data-page="leveling">⭐ Niveaux</div>
+<div class="nav-group">Communauté</div>
+<div class="nav-item" data-page="moderation">🛡️ Modération</div>
+<div class="nav-item" data-page="fun">🎉 Fun</div>
+<div class="nav-item" data-page="music">🎵 Musique</div>
+<div class="nav-group">Outils</div>
+</nav>
+
+<main class="main" id="main">
+<div id="sb"></div>
+
+<!-- DASHBOARD -->
+<div id="page-overview" class="page active">
+<div class="stats" id="ovStats">
+<div class="sc"><div class="ico">🖥️</div><div class="val" id="sGuilds">-</div><div class="lbl">Serveurs</div></div>
+<div class="sc"><div class="ico">👥</div><div class="val" id="sUsers">-</div><div class="lbl">Membres</div></div>
+<div class="sc"><div class="ico">📡</div><div class="val" id="sPing">-</div><div class="lbl">Latence</div></div>
+<div class="sc"><div class="ico">⏱️</div><div class="val" id="sUptime">-</div><div class="lbl">Uptime</div></div>
+<div class="sc"><div class="ico">💬</div><div class="val" id="sChannels">-</div><div class="lbl">Salons</div></div>
+<div class="sc"><div class="ico">⚙️</div><div class="val" id="sCommands">-</div><div class="lbl">Commandes</div></div>
+<div class="sc"><div class="ico">📄</div><div class="val" id="sFiles">-</div><div class="lbl">Fichiers</div></div>
+<div class="sc"><div class="ico">💾</div><div class="val" id="sMemory">-</div><div class="lbl">Mémoire</div></div>
+</div>
+<div class="cards">
+<div class="cd"><h3>🎫 Tickets</h3>
+<div class="r"><span class="l">Ouverts</span><span class="v" id="tOpen">-</span></div>
+<div class="r"><span class="l">Fermés</span><span class="v" id="tClosed">-</span></div>
+<div class="r"><span class="l">Total</span><span class="v" id="tTotal">-</span></div>
+<div class="r"><span class="l">Catégories</span><span class="v" id="tCats">-</span></div>
+</div>
+<div class="cd"><h3>🛡️ Modération</h3>
+<div class="r"><span class="l">Mutes</span><span class="v" id="mMutes">-</span></div>
+<div class="r"><span class="l">Avertissements</span><span class="v" id="mWarns">-</span></div>
+<div class="r"><span class="l">Cas traités</span><span class="v" id="mCases">-</span></div>
+<div class="r"><span class="l">Strikes</span><span class="v" id="mStrikes">-</span></div>
+</div>
+<div class="cd"><h3>⭐ XP & Niveaux</h3>
+<div class="r"><span class="l">Joueurs suivis</span><span class="v" id="xPlayers">-</span></div>
+<div class="r"><span class="l">XP totale</span><span class="v" id="xTotal">-</span></div>
+<div class="r"><span class="l">Niveaux cumulés</span><span class="v" id="xLevels">-</span></div>
+<div class="r"><span class="l">Top niveau</span><span class="v" id="xTop">-</span></div>
+</div>
+<div class="cd"><h3>🎮 Fun & Jeux</h3>
+<div class="r"><span class="l">Duels</span><span class="v" id="fDuels">-</span></div>
+<div class="r"><span class="l">Giveaways</span><span class="v" id="fGive">-</span></div>
+<div class="r"><span class="l">Vocal</span><span class="v" id="fVoice">-</span></div>
+</div>
+</div>
+</div>
+
+<!-- COMMANDES -->
+<div id="page-commands" class="page">
+<div class="bar"><h2 style="font-size:1.1em">⚙️ Commandes</h2><span style="color:var(--t2);font-size:.85em" id="cmdStats"></span></div>
+<div id="cmdsList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px"><div class="load">⏳</div></div>
+</div>
+
+<!-- CHAT -->
+<div id="page-chat" class="page" style="display:flex;flex-direction:column;height:calc(100vh - 40px)">
+<div style="display:flex;gap:12px;flex:1;overflow:hidden">
+<div style="width:250px;flex-shrink:0;background:var(--card);border-radius:10px;border:1px solid var(--brd);display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:10px 12px;border-bottom:1px solid var(--brd);font-weight:600;font-size:.85em">💬 Conversations</div>
+<div id="convList" style="flex:1;overflow-y:auto"><div class="emp">Connexion...</div></div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:10px;border:1px solid var(--brd);overflow:hidden">
+<div id="chatHdr" style="padding:10px 14px;border-bottom:1px solid var(--brd);font-weight:600;font-size:.88em;display:flex;align-items:center;gap:8px"><span id="chatDot" style="width:8px;height:8px;border-radius:50%;background:#666;display:inline-block"></span><span id="chatUser">Sélectionnez un membre</span></div>
+<div id="chatMsgs" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:6px"><div class="emp">💬 Cliquez sur un membre</div></div>
+<div style="display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--brd)">
+<textarea id="chatIn" placeholder="Message..." rows="1" style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--brd);background:rgba(255,255,255,0.05);color:var(--t);font-size:.85em;resize:none;outline:none;font-family:inherit" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+<button class="btn btn-p" onclick="sendChat()">Envoyer</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TICKETS -->
+<div id="page-tickets" class="page">
+<div class="bar"><h2 style="font-size:1.1em">🎫 Tickets récents</h2><span style="color:var(--t2);font-size:.85em">Les 50 derniers tickets</span></div>
+<div id="ticketsContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- CATÉGORIES -->
+<div id="page-categories" class="page">
+<div class="bar">
+<h2 style="font-size:1.1em">📂 Catégories</h2>
+<select class="sel" id="catSel"><option value="">Tous les serveurs</option></select>
+<button class="btn btn-p" onclick="openCat()">➕ Nouvelle</button>
+<button class="btn btn-g" onclick="loadCats()">🔄</button>
+</div>
+<div id="catsContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- SERVEURS -->
+<div id="page-servers" class="page">
+<div class="bar"><h2 style="font-size:1.1em">🖥️ Serveurs</h2></div>
+<div id="srvContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- ÉCONOMIE -->
+<div id="page-economy" class="page">
+<div class="bar">
+<h2 style="font-size:1.1em">💰 Top Économie</h2>
+<button class="btn btn-g" onclick="loadEconomy()">🔄</button>
+</div>
+<div id="ecoContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- GIVEAWAY -->
+<div id="page-giveaway" class="page">
+<div class="bar"><h2 style="font-size:1.1em">🎁 Giveaways</h2><button class="btn btn-g" onclick="loadGiveaways()">🔄</button></div>
+<div id="giveContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- NIVEAUX -->
+<div id="page-leveling" class="page">
+<div class="bar"><h2 style="font-size:1.1em">⭐ Classement Niveaux</h2><button class="btn btn-g" onclick="loadLeveling()">🔄</button></div>
+<div id="lvlContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- MODÉRATION -->
+<div id="page-moderation" class="page">
+<div class="stats" id="modStats">
+<div class="sc"><div class="ico">🔨</div><div class="val" id="modBans">-</div><div class="lbl">Bannissements</div></div>
+<div class="sc"><div class="ico">🔇</div><div class="val" id="modMutes2">-</div><div class="lbl">Mutes</div></div>
+<div class="sc"><div class="ico">⚠️</div><div class="val" id="modWarns2">-</div><div class="lbl">Avertissements</div></div>
+<div class="sc"><div class="ico">📋</div><div class="val" id="modCases2">-</div><div class="lbl">Cas traités</div></div>
+</div>
+<div class="cards">
+<div class="cd"><h3>🔨 Dernières actions</h3>
+<div id="modActions"><div class="emp">Aucune action récente</div></div>
+</div>
+</div>
+</div>
+
+<!-- FUN -->
+<div id="page-fun" class="page">
+<div class="bar"><h2 style="font-size:1.1em">🎉 Fun & Jeux</h2></div>
+<div class="cards" id="funContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- MUSIQUE -->
+<div id="page-music" class="page">
+<div class="bar"><h2 style="font-size:1.1em">🎵 Musique</h2></div>
+<div class="cards" id="musicContent"><div class="load">⏳</div></div>
+</div>
+
+<!-- INVENTAIRE -->
+<div id="page-inventory" class="page">
+<div id="invLoginPrompt" style="display:none">
+<div class="cd" style="max-width:400px;margin:40px auto;text-align:center;padding:30px">
+<div style="font-size:2.5em;margin-bottom:12px">🔒</div>
+<h2 style="font-size:1.2em;margin-bottom:8px">Connexion requise</h2>
+<p style="color:var(--t2);font-size:.85em;margin-bottom:16px">Connecte-toi avec ton ID Discord pour gérer tes rôles depuis le web.</p>
+<input id="invUserId" class="in" style="width:100%;margin-bottom:8px;text-align:center" placeholder="ID Discord (ex: 123456789012345678)">
+<input id="invPassword" class="in" style="width:100%;margin-bottom:12px;text-align:center" type="password" placeholder="Mot de passe (optionnel)">
+<div class="bar" style="justify-content:center">
+<button class="btn btn-p" onclick="loginAndLoadInv()">🔓 Se connecter</button>
+</div>
+<div style="margin-top:10px;font-size:.75em;color:var(--t2)">💡 Mot de passe seulement si tu en as défini un. Sinon, laisse vide.</div>
+</div>
+</div>
+<div id="invContent" style="display:none">
+<div class="bar">
+<h2 style="font-size:1.1em">🎒 Mon Inventaire</h2>
+<select class="sel" id="invGuildSel" onchange="loadInventory()"></select>
+<span style="color:var(--t2);font-size:.85em" id="invBadge"></span>
+<button class="btn btn-g" onclick="loadInventory()">🔄</button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:12px">
+<div class="cd"><h3>👁️ Rôles affichés</h3><div id="invDisplayed" class="emp">Aucun</div></div>
+<div class="cd"><h3>🙈 Rôles masqués</h3><div id="invHidden" class="emp">Aucun</div></div>
+</div>
+<div class="cd" style="margin-bottom:12px"><h3>🔒 Rôles système</h3><div id="invLocked" class="emp">Aucun</div></div>
+<div class="cd"><h3>📥 Rôles disponibles</h3><div id="invClaimable" class="emp">Aucun</div></div>
+</div>
+</div>
+</main>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-inner">
+<h2 id="modTitle">Nouveau</h2>
+<input type="hidden" id="modId">
+<div id="modFields"></div>
+<div class="bar" style="justify-content:flex-end;margin-top:4px">
+<button class="btn btn-g" onclick="closeModal()">Annuler</button>
+<button class="btn btn-p" onclick="saveModal()">💾 Enregistrer</button>
+</div>
+</div>
+</div>
+
+<script src="common.js"></script>
+<script>
+const API='/api/bot';const AAPI='/api/auth';const IAPI='/api/inventory';
+let UID='';let convs=[];let chatUser=null;let chatInt=null;let cats={};
+let SESSION_TOKEN=localStorage.getItem('session_token')||'';
+let SESSION_USER=null;let SESSION_GUILDS=[];
+let SESSION_PERMISSION_LEVEL=parseInt(localStorage.getItem('permissionLevel'))||0;
+function $(id){return document.getElementById(id)}
+function st(t,m,to=5000){const e=$('sb');e.className='status-bar '+t;e.textContent=m;if(to)setTimeout(()=>e.style.display='none',to)}
+function fmt(n){return(n??0).toLocaleString('fr-FR')}
+function ut(s){const d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60),se=Math.floor(s%60);return `${d}j ${h}h ${m}m ${se}s`}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function authHeaders(extra){return{'Content-Type':'application/json',...(SESSION_TOKEN?{'x-session-token':SESSION_TOKEN}:{}),...extra}}
+async function api(p,o){const res=await fetch(`${API}${p}`,{...o,headers:authHeaders(o?.headers)});if(!res.ok){const t=await res.text().catch(()=>'');throw new Error(t||res.statusText)}return res.json()}
+async function apiRaw(base,p,o){const url=(window.SITE?.apiBase||'')+`${base}${p}`;const res=await fetch(url,{...o,headers:authHeaders(o?.headers)});if(!res.ok){const t=await res.text().catch(()=>'');throw new Error(t||res.statusText)}return res.json()}
+
+// ─── Auth ───
+function updateAuthUI(){
+const el=$('authLabel');const st=$('authStatus');
+if(SESSION_USER){el.textContent=SESSION_USER.id.slice(0,8)+'…';st.style.background='rgba(46,204,113,0.15)'}
+else{el.textContent='Non connecté';st.style.background='var(--glass)'}
+}
+async function checkSession(){if(!SESSION_TOKEN)return null
+try{const r=await apiRaw(AAPI,'/verify');if(r.valid){SESSION_USER=r.session;SESSION_PERMISSION_LEVEL=parseInt(localStorage.getItem('permissionLevel'))||0;updateAuthUI();return r.session}throw new Error('Invalid')}catch(e){SESSION_TOKEN='';SESSION_USER=null;SESSION_PERMISSION_LEVEL=0;localStorage.removeItem('session_token');localStorage.removeItem('permissionLevel');localStorage.removeItem('permissionName');updateAuthUI();return null}}
+async function doLogin(){const userId=$('invUserId').value.trim();const password=$('invPassword').value.trim();if(!userId){st('bad','❌ ID Discord requis');return}
+try{const r=await apiRaw(AAPI,'/login',{method:'POST',body:JSON.stringify({userId,password:password||'none'})});SESSION_TOKEN=r.token;SESSION_USER=r.user;SESSION_PERMISSION_LEVEL=r.permissionLevel||0;localStorage.setItem('session_token',r.token);localStorage.setItem('permissionLevel',r.permissionLevel||0);localStorage.setItem('permissionName',r.permissionName||'Membre');updateAuthUI();st('ok','✅ Connecté !');return r}catch(e){st('bad','❌ '+e.message);return null}}
+function doLogout(){SESSION_TOKEN='';SESSION_USER=null;SESSION_PERMISSION_LEVEL=0;localStorage.removeItem('session_token');localStorage.removeItem('permissionLevel');localStorage.removeItem('permissionName');updateAuthUI();$('invLoginPrompt').style.display='block';$('invContent').style.display='none';st('ok','✅ Déconnecté')}
+
+async function loginAndLoadInv(){const r=await doLogin();if(r)$('invLoginPrompt').style.display='none';loadInventory()}
+
+// ─── Navigation ───
+document.querySelectorAll('.nav-item').forEach(i=>{i.addEventListener('click',()=>{document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));i.classList.add('active');const pg=$('page-'+i.dataset.page);if(pg){pg.classList.add('active');loadPage(i.dataset.page)}})})
+
+function loadPage(n){
+if(n==='chat')initChat();
+if(n==='overview')loadOverview();
+if(n==='commands')loadCommands();
+if(n==='tickets')loadTickets();
+if(n==='categories'){loadGuilds();loadCats()}
+if(n==='servers')loadServers();
+if(n==='economy')loadEconomy();
+if(n==='giveaway')loadGiveaways();
+if(n==='leveling')loadLeveling();
+if(n==='moderation')loadModeration();
+if(n==='fun')loadFun();
+if(n==='music')loadMusic();
+if(n==='inventory')showInventory();
+}
+
+// DASHBOARD
+async function loadOverview(){
+try{const s=await api('/stats');$('sGuilds').textContent=fmt(s.guilds);$('sUsers').textContent=fmt(s.users);$('sPing').textContent=fmt(s.ping);$('sChannels').textContent=fmt(s.channels);$('sCommands').textContent=fmt(s.commands);$('sMemory').textContent=(s.memory/1024/1024).toFixed(1)+'MB';if(s.uptime)$('sUptime').textContent=ut(s.uptime)}catch(e){}
+try{const t=await api('/tickets');$('tOpen').textContent=fmt(t.open);$('tClosed').textContent=fmt(t.closed);$('tTotal').textContent=fmt(t.total);$('tCats').textContent=fmt(t.categories)}catch(e){}
+try{const m=await api('/moderation/stats');$('mMutes').textContent=fmt(m.activeMutes);$('mWarns').textContent=fmt(m.totalWarnings);$('mCases').textContent=fmt(m.totalCases);$('mStrikes').textContent=fmt(m.totalStrikes)}catch(e){}
+try{const x=await api('/leveling/stats');$('xPlayers').textContent=fmt(x.players);$('xTotal').textContent=fmt(x.totalXp);$('xLevels').textContent=fmt(x.totalLevels);if(x.topPlayers&&x.topPlayers.length)$('xTop').textContent=`${x.topPlayers[0].level}`}catch(e){}
+try{const f=await api('/fun/stats');$('fDuels').textContent=fmt(f.totalDuels)}catch(e){}
+try{const g=await api('/giveaways/stats');$('fGive').textContent=fmt(g.active||0)}catch(e){}
+try{const v=await api('/voice/stats');$('fVoice').textContent=fmt(v.usersInVoice||0)}catch(e){}
+try{$('sFiles').textContent=fmt(285)}catch(e){}
+}
+
+// COMMANDS
+async function loadCommands(){
+try{const d=await api('/commands');const c=d.commands;const en=c.filter(x=>x.enabled).length;$('cmdStats').textContent=`${en}/${c.length} actives`;const gr={};const nm={moderation:'🛡️ Modération',admin:'👑 Admin',configuration:'⚙️ Config',tickets:'🎫 Tickets',community:'👥 Communauté',information:'ℹ️ Info',fun:'🎉 Fun',giveaway:'🎁 Giveaway',invites:'📨 Invit',leveling:'⭐ XP',casino:'💰 Casino',utility:'🔧 Util',protection:'🔒 Protect',roles:'🔰 Rôles',suggestion:'💡 Suggest',voice:'🎤 Vocal',welcome:'👋 Bienvenue',xp:'⭐ XP',backup:'💾 Backup',automod:'🤖 Auto-Mod',panel:'🎛️ Panneaux',economy:'💰 Économie',games:'🎮 Jeux',images:'🖼️ Images',levels:'⭐ Niveaux',music:'🎵 Musique',profile:'👤 Profil',tools:'🔧 Outils',suggestions:'💡 Suggestions',afk:'💤 AFK',birthdays:'🎂 Anniversaires',family:'👨‍👩‍👧 Famille',reactionroles:'🔘 Réaction Rôles'};
+for(const x of c){if(!gr[x.category])gr[x.category]=[];gr[x.category].push(x)}
+let h='';for(const[cat,list]of Object.entries(gr)){h+=`<div class="cd"><h4>${nm[cat]||'📁 '+cat} <span style="color:var(--t2);font-weight:400;font-size:.78em">(${list.length})</span></h4>`;for(const x of list){h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:.82em;border-bottom:1px solid var(--brd)"><span style="font-family:monospace;font-weight:600">/${x.name}</span><label class="tg"><input type="checkbox" ${x.enabled?'checked':''} data-key="${x.key}" onchange="toggleCmd(this)"><span class="sl"></span></label></div>`}h+='</div>'}
+$('cmdsList').innerHTML=h||'<div class="emp">📭 Aucune commande</div>'}catch(e){$('cmdsList').innerHTML='<div class="emp">❌ Erreur</div>'}
+}
+async function toggleCmd(el){const k=el.dataset.key;try{await api('/commands/toggle',{method:'PUT',body:JSON.stringify({key:k})});st('ok','✅ Modifié');loadCommands()}catch(e){el.checked=!el.checked;st('bad','❌ Erreur')}}
+
+// TICKETS
+async function loadTickets(){
+try{const d=await api('/tickets/recent?limit=50');if(!d.tickets?.length){$('ticketsContent').innerHTML='<div class="emp">📭 Aucun ticket</div>';return}
+let h='<div class="tw"><table><thead><tr><th>#</th><th>Utilisateur</th><th>Serveur</th><th>Statut</th><th>Date</th></tr></thead><tbody>'
+for(const t of d.tickets){const st=t.open?'<span class="bdg bdg-on">✅ Ouvert</span>':'<span class="bdg bdg-off">❌ Fermé</span>';const dt=new Date(t.createdAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});h+=`<tr><td>#${t.id}</td><td><code>${(t.userId||'?').slice(0,10)}…</code></td><td>${t.guildId?t.guildId.slice(0,8)+'…':'-'}</td><td>${st}</td><td>${dt}</td></tr>`}
+h+='</tbody></table></div>';$('ticketsContent').innerHTML=h}catch(e){$('ticketsContent').innerHTML='<div class="emp">❌ Erreur</div>'}
+}
+
+// CATÉGORIES
+let guilds=[];
+async function loadGuilds(){try{guilds=await api('/guilds');const s=$('catSel');s.innerHTML='<option value="">— Tous —</option>';for(const g of guilds)s.innerHTML+=`<option value="${g.id}">${esc(g.name)}</option>`}catch(e){}}
+async function loadCats(){try{const gid=$('catSel').value;let d;if(gid)d=await api(`/guilds/${gid}/categories`);else d=await api('/tickets/categories');const c=d.categories||[];if(!c.length){$('catsContent').innerHTML='<div class="emp">📭 Aucune catégorie</div>';return}
+let h=`<div class="tw"><table><thead><tr><th>Emoji</th><th>Nom</th><th>Limite</th><th>Salon</th><th>Actions</th></tr></thead><tbody>`
+for(const x of c){const ch=x.discordCategory?'<span class="bdg bdg-on">✅</span>':'<span class="bdg bdg-off">❌</span>';h+=`<tr><td style="font-size:1.2em">${x.emoji||'📁'}</td><td><strong>${esc(x.name)}</strong></td><td>${x.memberLimit||1}</td><td>${ch}</td><td><button class="btn btn-g btn-sm" onclick="editCat('${x.id}')">✏️</button> <button class="btn btn-bad btn-sm" onclick="delCat('${x.id}','${esc(x.name)}')">🗑️</button></td></tr>`}
+h+='</tbody></table></div>';$('catsContent').innerHTML=h}catch(e){$('catsContent').innerHTML='<div class="emp">❌ Erreur</div>'}
+}
+
+async function editCat(id){const gid=$('catSel').value;if(!gid){st('bad','❌ Choisissez un serveur');return}
+try{const d=await api(`/guilds/${gid}/categories`);const c=d.categories.find(x=>String(x.id)===id||String(x.id)===String(id));if(c)openCat(c);else st('bad','❌ Introuvable')}catch(e){st('bad','❌ '+e.message)}}
+async function delCat(id,name){if(!confirm(`⚠️ Supprimer "${name}" ?`))return;try{await api(`/guilds/categories/${id}`,{method:'DELETE'});loadCats();st('ok','✅ Supprimé')}catch(e){st('bad','❌ '+e.message)}}
+$('catSel')?.addEventListener('change',loadCats);
+
+function openCat(d){$('modTitle').textContent=d?'✏️ Modifier':'➕ Nouvelle catégorie';$('modId').value=d?.id||''
+$('modFields').innerHTML=`
+<label>Nom *</label><input id="f_name" value="${esc(d?.name||'')}" placeholder="Support">
+<label>Emoji</label><input id="f_emoji" value="${esc(d?.emoji||'📁')}" maxlength="2" style="max-width:60px">
+<label>Limite membres</label><input id="f_limit" type="number" value="${d?.memberLimit||1}" min="1" max="10" style="max-width:70px">
+<label>Message d'ouverture</label><textarea id="f_msg">${esc(d?.openingMessage||'')}</textarea>
+`;$('modal').classList.add('active')}
+function closeModal(){$('modal').classList.remove('active')}
+async function saveModal(){const id=$('modId').value,gid=$('catSel').value;if(!gid&&!id){st('bad','❌ Choisissez un serveur');return}
+const body={name:$('f_name').value.trim(),emoji:$('f_emoji').value.trim()||'📁',memberLimit:parseInt($('f_limit').value)||1,openingMessage:$('f_msg').value.trim()}
+if(!body.name){st('bad','❌ Nom requis');return}
+try{if(id)await api(`/guilds/categories/${id}`,{method:'PUT',body:JSON.stringify(body)});else await api(`/guilds/${gid}/categories`,{method:'POST',body:JSON.stringify(body)});closeModal();loadCats();st('ok','✅ Enregistré')}catch(e){st('bad','❌ '+e.message)}}
+
+// SERVEURS
+async function loadServers(){try{const gl=await api('/guilds');if(!gl.length){$('srvContent').innerHTML='<div class="emp">📭 Aucun serveur</div>';return}
+let h='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">'
+for(const g of gl){h+=`<div class="cd" style="display:flex;align-items:center;gap:10px;padding:12px"><div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;font-size:1.4em;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05)">${g.icon?`<img src="${g.icon}" style="width:36px;height:36px;border-radius:50%">`:'🖥️'}</div><div style="flex:1;min-width:0"><div style="font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.9em">${esc(g.name)}</div><div style="color:var(--t2);font-size:.78em">👥 ${fmt(g.memberCount)} · 🎫 ${fmt(g.openTickets)} ouverts</div></div></div>`}
+h+='</div>';$('srvContent').innerHTML=h}catch(e){$('srvContent').innerHTML='<div class="emp">❌ Erreur</div>'}}
+
+// ÉCONOMIE
+async function loadEconomy(){try{const d=await api('/leveling/leaderboard?limit=50');if(!d.length){$('ecoContent').innerHTML='<div class="emp">📭 Aucun joueur</div>';return}
+let h='<div class="tw"><table><thead><tr><th>#</th><th>ID</th><th>Niveau</th><th>XP</th></tr></thead><tbody>'
+for(const u of d){const m=u.rank===1?'🥇':u.rank===2?'🥈':u.rank===3?'🥉':`#${u.rank}`;h+=`<tr><td>${m}</td><td><code>${u.id.slice(0,12)}…</code></td><td>${u.level}</td><td>${fmt(u.xp)} XP</td></tr>`}
+h+='</tbody></table></div>';$('ecoContent').innerHTML=h}catch(e){$('ecoContent').innerHTML='<div class="emp">❌ Erreur</div>'}}
+
+// GIVEAWAYS
+async function loadGiveaways(){try{const d=await api('/giveaways/stats');$('giveContent').innerHTML=`<div class="cards"><div class="cd"><h3>🎁 Giveaways</h3><div class="r"><span class="l">Actifs</span><span class="v">${fmt(d.active||0)}</span></div><div class="r"><span class="l">Terminés</span><span class="v">${fmt(d.ended||0)}</span></div><div class="r"><span class="l">Total</span><span class="v">${fmt(d.total||0)}</span></div></div></div>`}catch(e){$('giveContent').innerHTML='<div class="emp">❌ Erreur</div>'}}
+
+// LEVELING
+async function loadLeveling(){try{const d=await api('/leveling/leaderboard?limit=50');if(!d.length){$('lvlContent').innerHTML='<div class="emp">📭 Aucun joueur</div>';return}
+let h='<div class="tw"><table><thead><tr><th>#</th><th>ID</th><th>Niveau</th><th>XP</th><th>Prochain</th></tr></thead><tbody>'
+for(const u of d){const m=u.rank===1?'🥇':u.rank===2?'🥈':u.rank===3?'🥉':`#${u.rank}`;h+=`<tr><td>${m}</td><td><code>${u.id.slice(0,12)}…</code></td><td>${u.level}</td><td>${fmt(u.xp)}</td><td>${fmt(u.xp*1.5||0)}</td></tr>`}
+h+='</tbody></table></div>';$('lvlContent').innerHTML=h}catch(e){$('lvlContent').innerHTML='<div class="emp">❌ Erreur</div>'}}
+
+// MODÉRATION
+async function loadModeration(){try{const d=await api('/moderation/stats');$('modBans').textContent=fmt(d.totalCases||0);$('modMutes2').textContent=fmt(d.activeMutes||0);$('modWarns2').textContent=fmt(d.totalWarnings||0);$('modCases2').textContent=fmt(d.totalCases||0);$('modActions').innerHTML=`<div class="r"><span class="l">Mutes actifs</span><span class="v">${fmt(d.activeMutes||0)}</span></div><div class="r"><span class="l">Avertissements</span><span class="v">${fmt(d.totalWarnings||0)}</span></div><div class="r"><span class="l">Strikes</span><span class="v">${fmt(d.totalStrikes||0)}</span></div>`}catch(e){}}
+
+// FUN
+async function loadFun(){$('funContent').innerHTML=`<div class="cd"><h3>🎮 Statistiques Fun</h3><div class="r"><span class="l">Commandes fun</span><span class="v">28</span></div><div class="r"><span class="l">Commandes image</span><span class="v">35</span></div><div class="r"><span class="l">Commandes jeu</span><span class="v">10</span></div></div><div class="cd"><h3>🖼️ Images</h3><div class="r"><span class="l">Génération</span><span class="v">Canvas</span></div><div class="r"><span class="l">Filtres</span><span class="v">15</span></div></div>`}
+
+// MUSIQUE
+async function loadMusic(){$('musicContent').innerHTML=`<div class="cd"><h3>🎵 Système Musique</h3><div class="r"><span class="l">Commandes</span><span class="v">17</span></div><div class="r"><span class="l">Plateformes</span><span class="v">YouTube, Spotify</span></div><div class="r"><span class="l">Lavalink</span><span class="v">Requis</span></div></div><div class="cd"><h3>🔊 Contrôles</h3><div class="r"><span class="l">Lecture</span><span class="v">play, stop, skip</span></div><div class="r"><span class="l">File</span><span class="v">queue, loop</span></div><div class="r"><span class="l">Audio</span><span class="v">bassboost, volume</span></div></div>`}
+
+// CHAT
+async function initChat(){const s=localStorage.getItem('chat_uid');if(s)UID=s;if(!UID){const k=prompt('🔑 ID Utilisateur Discord (Owner/Dev) :');if(!k)return;UID=k.trim();localStorage.setItem('chat_uid',UID)};loadConvs();if(chatInt)clearInterval(chatInt);chatInt=setInterval(()=>{if(chatUser)loadMsgs(chatUser,true)},3000)}
+async function loadConvs(){try{const d=await api('/chat/conversations',{headers:{'x-user-id':UID}});convs=d.conversations||[];if(!convs.length){$('convList').innerHTML='<div class="emp">📭 Aucune conversation</div>';return}
+let h='';for(const c of convs){const a=chatUser===c.userId;const inl=(c.username||c.userId).charAt(0).toUpperCase();const t=c.lastTime?new Date(c.lastTime).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'';h+=`<div class="${a?'active':''}" style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--brd);transition:all.2s;${a?'background:rgba(153,51,255,0.15);border-left:3px solid var(--p)':''}" onclick="selectChat('${c.userId}')"><div style="width:30px;height:30px;border-radius:50%;background:var(--p2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8em;color:#fff;flex-shrink:0">${inl}</div><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:.82em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.username||c.userId)}</div><div style="font-size:.72em;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.lastMessage||'')}</div></div><div style="font-size:.65em;color:var(--t2);flex-shrink:0">${t}</div></div>`}
+$('convList').innerHTML=h}catch(e){}}
+async function selectChat(uid){chatUser=uid;if(!uid){$('chatUser').textContent='Sélectionnez un membre';$('chatMsgs').innerHTML='<div class="emp">💬 Cliquez sur un membre</div>';$('chatDot').style.background='#666';return}
+const c=convs.find(x=>x.userId===uid);$('chatUser').textContent=c?.username||uid;$('chatIn').value='';$('chatIn').focus();loadConvs();loadMsgs(uid)}
+async function loadMsgs(uid,silent=false){try{const d=await api(`/chat/messages/${uid}`,{headers:{'x-user-id':UID}});const ms=d.messages||[];const c=$('chatMsgs');if(!ms.length){if(!silent)c.innerHTML='<div class="emp">💬 Écrivez à ce membre</div>';return}
+let h='';for(const m of ms){const dir=m.direction==='outgoing'?'outgoing':'incoming';const t=new Date(m.createdAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});h+=`<div style="max-width:75%;padding:8px 12px;border-radius:10px;font-size:.85em;word-wrap:break-word;align-self:${dir==='outgoing'?'flex-end':'flex-start'};background:${dir==='outgoing'?'linear-gradient(135deg,var(--p),var(--p2))':'rgba(255,255,255,0.08)'};border-bottom-${dir==='outgoing'?'right':'left'}-radius:3px">${esc(m.content)}<div style="font-size:.65em;opacity:.6;margin-top:3px">${t}</div></div>`}
+c.innerHTML=h;c.scrollTop=c.scrollHeight;$('chatDot').style.background='#2ecc71'}catch(e){if(!silent)$('chatMsgs').innerHTML='<div class="emp">❌ Erreur</div>'}}
+async function sendChat(){const msg=$('chatIn').value.trim();if(!msg||!chatUser)return;$('chatIn').value='';try{await api('/chat/send',{method:'POST',headers:{'Content-Type':'application/json','x-user-id':UID},body:JSON.stringify({userId:chatUser,message:msg})});loadMsgs(chatUser);loadConvs()}catch(e){st('bad','❌ '+e.message);$('chatIn').value=msg}}
+
+// ─── INVENTAIRE ───
+async function showInventory(){
+await checkSession();
+if(!SESSION_TOKEN){$('invLoginPrompt').style.display='block';$('invContent').style.display='none';return}
+$('invLoginPrompt').style.display='none';$('invContent').style.display='block'
+try{const gl=await api('/guilds');SESSION_GUILDS=gl;const s=$('invGuildSel');s.innerHTML='';for(const g of gl){s.innerHTML+=`<option value="${g.id}">${esc(g.name)}</option>`}
+loadInventory()}catch(e){$('invContent').innerHTML='<div class="emp">❌ Erreur chargement</div>'}
+}
+async function loadInventory(){
+const guildId=$('invGuildSel').value;if(!guildId){$('invDisplayed').innerHTML='<div class="emp">Choisis un serveur</div>';return}
+try{
+const d=await apiRaw(IAPI,`/${guildId}/roles`);
+$('invBadge').textContent=`${d.badge.emoji} ${d.badge.name} • Niv. ${d.memberLevel}`;
+renderRoleList('invDisplayed',d.displayed,'visible',guildId);
+renderRoleList('invHidden',d.hidden,'hidden',guildId);
+renderRoleList('invLocked',d.locked,'locked',guildId);
+renderRoleList('invClaimable',d.claimable,'claimable',guildId);
+}catch(e){st('bad','❌ '+e.message)}
+}
+function renderRoleList(id,roles,state,guildId){
+const el=$(id);if(!roles||!roles.length){el.innerHTML='<div class="emp">Aucun</div>';return}
+let html='<div style="display:flex;flex-wrap:wrap;gap:6px">'
+for(const r of roles){
+const bg=r.color||'#555';
+const isTogglable=state==='visible'||state==='hidden';
+const actionLabel=state==='visible'?'🙈 Masquer':(state==='hidden'?'👁️ Afficher':'');
+const permLevel=r.permissionLevel||0;
+html+=`<div style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--brd);font-size:.82em">
+<span style="width:10px;height:10px;border-radius:50%;background:${bg};flex-shrink:0"></span>
+<span style="font-weight:600">${esc(r.name)}</span>
+<span style="font-size:.72em;color:var(--t2)">👥 ${r.memberCount}</span>
+${isTogglable?`<button class="btn btn-sm ${state==='visible'?'btn-bad':'btn-ok'}" onclick="toggleRoleVisibility('${guildId}','${r.id}')" style="padding:3px 8px;font-size:.78em">${actionLabel}</button>`:''}
+</div>`
+}
+html+='</div>';el.innerHTML=html
+}
+async function toggleRoleVisibility(guildId,roleId){
+try{
+const r=await apiRaw(IAPI,`/${guildId}/roles/${roleId}/visibility`,{method:'PUT'});
+st('ok',`✅ ${r.action==='shown'?'Affiché':'Masqué'} • ${r.roleName}`);
+loadInventory();
+}catch(e){st('bad','❌ '+e.message)}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  checkSession();
+  loadOverview();loadCommands();loadTickets();loadGuilds().then(loadCats);loadServers();loadEconomy();loadGiveaways();loadLeveling();loadModeration();loadFun();loadMusic();
+  setInterval(loadOverview,30000);
+  if(!SESSION_TOKEN){checkBackend().then(ok=>{if(!ok)backendUnreachable()})}
+});
+</script>
+</body>
+</html>
