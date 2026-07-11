@@ -1,2 +1,19 @@
 PassengerEnabled off
 Options -Indexes
+
+RewriteEngine On
+RewriteBase /
+
+# API routing — send /api/* requests to api/index.php
+RewriteRule ^api/(.*)$ api/index.php/$1 [QSA,L]
+
+# Try serving request.html if it exists (e.g. /dashboard → /dashboard.html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Fallback: serve index.html for all remaining non-file requests
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
