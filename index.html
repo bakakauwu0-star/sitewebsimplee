@@ -4,131 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>𝓼ιмρℓє — Communauté</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--p:#9933ff;--p2:#7a1fd1;--s:#ff3399;--ok:#2ecc71;--bad:#e74c3c;--warn:#f39c12;--bg:#0d0d1a;--glass:rgba(255,255,255,0.06);--card:rgba(255,255,255,0.04);--brd:rgba(255,255,255,0.08);--t:#f0f0f0;--t2:#aaa;--r:16px}
-html{scroll-behavior:smooth}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
-a{color:var(--p);text-decoration:none}a:hover{text-decoration:underline}
-
-.bg-glow{position:fixed;width:400px;height:400px;border-radius:50%;filter:blur(120px);opacity:.15;pointer-events:none;z-index:0}
-.bg-glow.g1{background:var(--p);top:-100px;left:-100px}
-.bg-glow.g2{background:var(--s);bottom:-100px;right:-100px}
-.bg-glow.g3{background:var(--p2);top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px}
-
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,13,26,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--brd)}
-nav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15em;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-nav .brand span{font-size:1.4em}
-nav .nav-links{display:flex;gap:24px;align-items:center}
-nav .nav-links a{color:var(--t2);font-size:.88em;font-weight:500;transition:.2s}
-nav .nav-links a:hover{color:var(--p);text-decoration:none}
-nav .nav-login{padding:8px 20px;border-radius:10px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-weight:700;font-size:.88em;border:none;cursor:pointer;transition:.2s}
-nav .nav-login:hover{opacity:.88;transform:translateY(-1px)}
-nav .mobile-menu{display:none;background:none;border:none;color:var(--t);font-size:1.4em;cursor:pointer}
-
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:20px;background:rgba(153,51,255,.12);border:1px solid rgba(153,51,255,.25);font-size:.78em;font-weight:600;color:var(--p);margin-bottom:24px}
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:pulse-dot 2s infinite}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
-.hero h1{font-size:clamp(2.8em,6vw,4.5em);font-weight:900;line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,#fff 30%,var(--p) 60%,var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero .tagline{font-size:clamp(1em,2vw,1.25em);color:var(--t2);max-width:600px;margin:0 auto 36px;line-height:1.6}
-.hero .tagline b{color:var(--t)}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-.btn-hero{padding:14px 32px;border-radius:12px;font-size:.95em;font-weight:700;border:none;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
-.btn-hero.primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;box-shadow:0 4px 24px rgba(153,51,255,.35)}
-.btn-hero.primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(153,51,255,.5)}
-.btn-hero.outline{background:transparent;color:var(--t);border:1px solid var(--brd)}
-.btn-hero.outline:hover{background:rgba(255,255,255,.05);border-color:var(--p)}
-
-.stats-bar{position:relative;z-index:1;display:flex;justify-content:center;gap:48px;padding:40px 24px;flex-wrap:wrap}
-.stat{text-align:center}
-.stat .num{font-size:2em;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat .lbl{font-size:.82em;color:var(--t2);margin-top:4px}
-
-section{position:relative;z-index:1;padding:80px 24px;max-width:1200px;margin:0 auto}
-.section-title{text-align:center;margin-bottom:48px}
-.section-title h2{font-size:2em;font-weight:800;margin-bottom:8px}
-.section-title h2 span{background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.section-title p{color:var(--t2);font-size:.95em}
-
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-.feature-card{background:var(--glass);border:1px solid var(--brd);border-radius:var(--r);padding:28px 24px;backdrop-filter:blur(12px);transition:all .3s;position:relative;overflow:hidden}
-.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p),var(--s));opacity:0;transition:.3s}
-.feature-card:hover{transform:translateY(-4px);border-color:rgba(153,51,255,.3)}
-.feature-card:hover::before{opacity:1}
-.feature-icon{font-size:2em;margin-bottom:14px}
-.feature-card h3{font-size:1.05em;font-weight:700;margin-bottom:8px}
-.feature-card p{color:var(--t2);font-size:.85em;line-height:1.5}
-
-.ranks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.rank-card{background:var(--glass);border:1px solid var(--brd);border-radius:var(--r);padding:20px;text-align:center;backdrop-filter:blur(12px);transition:all .3s}
-.rank-card:hover{transform:translateY(-3px);border-color:rgba(153,51,255,.3)}
-.rank-emoji{font-size:2.2em;margin-bottom:8px}
-.rank-name{font-weight:700;font-size:.95em;margin-bottom:4px}
-.rank-perms{color:var(--t2);font-size:.78em;line-height:1.5}
-.rank-level{display:inline-block;padding:2px 10px;border-radius:10px;font-size:.7em;font-weight:600;margin-top:8px;background:rgba(153,51,255,.12);color:var(--p)}
-
-.login-section{position:relative;z-index:1;padding:80px 24px;display:flex;justify-content:center}
-.login-wrapper{width:100%;max-width:440px}
-.login-card{background:var(--glass);border:1px solid var(--brd);border-radius:var(--r);padding:32px 28px;backdrop-filter:blur(16px);position:relative;overflow:hidden}
-.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--p),var(--s))}
-.login-card h2{text-align:center;font-size:1.2em;font-weight:700;margin-bottom:20px}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:.8em;color:var(--t2);margin-bottom:4px;font-weight:500}
-.field input{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--brd);background:rgba(255,255,255,.05);color:var(--t);font-size:.9em;outline:none;transition:.2s}
-.field input:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(153,51,255,.15)}
-.field input::placeholder{color:rgba(255,255,255,.25)}
-.btn{width:100%;padding:12px;border:none;border-radius:10px;font-size:.9em;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}
-.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
-.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn-dashboard{background:linear-gradient(135deg,var(--ok),#27ae60);color:#fff;margin-top:12px;display:none}
-.btn-dashboard:hover{opacity:.88;transform:translateY(-1px)}
-.btn-secondary{background:transparent;color:var(--t2);border:1px solid var(--brd);margin-top:8px;font-size:.82em}
-.btn-secondary:hover{background:rgba(255,255,255,.05);color:var(--t)}
-.error{display:none;padding:10px 14px;border-radius:8px;font-size:.82em;margin-bottom:12px;background:rgba(231,76,60,.12);color:#ff6b6b;border:1px solid rgba(231,76,60,.2)}
-.error.show{display:block}
-.success{display:none;padding:10px 14px;border-radius:8px;font-size:.82em;margin-bottom:12px;background:rgba(46,204,113,.12);color:#2ecc71;border:1px solid rgba(46,204,113,.2)}
-.success.show{display:block}
-.user-info{display:none;text-align:center;padding:16px;background:rgba(153,51,255,.06);border-radius:12px;margin-bottom:16px;border:1px solid rgba(153,51,255,.12)}
-.user-info.show{display:block}
-.user-info .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:1.5em;font-weight:800;color:#fff;margin:0 auto 10px}
-.user-info .name{font-weight:700;font-size:1em}
-.user-info .level{font-size:.78em;color:var(--t2);margin-top:2px}
-.user-info .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.72em;font-weight:600;margin-top:6px}
-.perm-denied{display:none;text-align:center;padding:20px;color:var(--t2);font-size:.85em}
-.perm-denied.show{display:block}
-.divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--t2);font-size:.75em}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--brd)}
-.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
-.btn-primary.loading .spinner{display:block}
-.btn-primary.loading span{display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-footer{position:relative;z-index:1;border-top:1px solid var(--brd);padding:40px 24px;text-align:center}
-.footer-content{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:20px;align-items:center}
-.footer-links{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
-.footer-links a{color:var(--t2);font-size:.85em;transition:.2s}
-.footer-links a:hover{color:var(--p)}
-.footer-status{display:flex;align-items:center;gap:8px;font-size:.82em;color:var(--t2)}
-.footer-status .dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
-.footer-copy{font-size:.78em;color:var(--t2);opacity:.6}
-
-@media(max-width:768px){
-  nav .nav-links{display:none}
-  nav .mobile-menu{display:block}
-  .hero h1{font-size:2.4em}
-  .stats-bar{gap:24px}
-  .stat .num{font-size:1.5em}
-  .features-grid{grid-template-columns:1fr}
-  .ranks-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:480px){
-  .ranks-grid{grid-template-columns:1fr}
-  nav{padding:12px 16px}
-  .hero-btns{flex-direction:column;align-items:center}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="bg-glow g1"></div>
@@ -147,18 +23,18 @@ footer{position:relative;z-index:1;border-top:1px solid var(--brd);padding:40px 
 </nav>
 
 <section class="hero">
-  <div class="hero-badge"><span class="dot"></span> En ligne — Version 1.3.4</div>
+  <div class="hero-badge"><span class="dot"></span> En ligne — Version 2.0</div>
   <h1>𝓼ιмρℓє</h1>
   <p class="tagline">Le bot <b>ultime</b> pour ta communauté Discord. Modération, économie, casino, XP, tickets et bien plus — le tout propulsé par <b>l'intelligence artificielle</b>.</p>
   <div class="hero-btns">
-    <button class="btn-hero primary" onclick="window.open('https://discord.com/oauth2/authorize?client_id=1513286724183130122&scope=bot+applications.commands&permissions=8','_blank')">🚀 Inviter le Bot</button>
-    <button class="btn-hero outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Découvrir ↓</button>
+    <button class="btn btn-primary" onclick="window.open('https://discord.com/oauth2/authorize?client_id=1513286724183130122&scope=bot+applications.commands&permissions=8','_blank')">🚀 Inviter le Bot</button>
+    <button class="btn btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Découvrir ↓</button>
   </div>
 </section>
 
 <div class="stats-bar">
   <div class="stat"><div class="num">150+</div><div class="lbl">Commandes</div></div>
-  <div class="stat"><div class="num">10K+</div><div class="lbl">Utilisateurs</div></div>
+  <div class="stat"><div class="num">18K+</div><div class="lbl">Utilisateurs</div></div>
   <div class="stat"><div class="num">99.9%</div><div class="lbl">Uptime</div></div>
   <div class="stat"><div class="num">24/7</div><div class="lbl">Support</div></div>
 </div>
@@ -168,47 +44,15 @@ footer{position:relative;z-index:1;border-top:1px solid var(--brd);padding:40px 
     <h2>Fonctionnalités <span>Puissantes</span></h2>
     <p>Tout ce dont ta communauté a besoin, en un seul bot.</p>
   </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🛡️</div>
-      <h3>Modération Avancée</h3>
-      <p>Système de modération complet avec warns, mutes, bans, auto-mod et logs détaillés.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💰</div>
-      <h3>Économie</h3>
-      <p>Système économique avec daily, work, shop, trades et un marché dynamique entre membres.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎰</div>
-      <h3>Casino</h3>
-      <p>Slots, roulette, blackjack, poker — gagne des pièces et escalade le leaderboard.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⭐</div>
-      <h3>Système XP</h3>
-      <p>Gagne de l'XP en parlant, monte de niveau et débloque des récompenses exclusives.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎫</div>
-      <h3>Tickets</h3>
-      <p>Système de tickets de support avec catégories, archives et gestion des staffs.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🤖</div>
-      <h3>Intelligence Artificielle</h3>
-      <p>Assistant IA intégré pour répondre aux questions, générer du contenu et plus encore.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎵</div>
-      <h3>Music</h3>
-      <p>Lecteur musical avec file d'attente, playlist et qualité audio optimisée.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>Dashboard Complet</h3>
-      <p>Panneau de contrôle web pour gérer le bot, voir les stats et configurer les modules.</p>
-    </div>
+  <div class="grid cols-auto">
+    <div class="card"><div class="ico">🛡️</div><h3>Modération Avancée</h3><p>Système complet avec warns, mutes, bans, auto-mod et logs détaillés.</p></div>
+    <div class="card"><div class="ico">💰</div><h3>Économie</h3><p>Daily, work, shop, trades et un marché dynamique entre membres.</p></div>
+    <div class="card"><div class="ico">🎰</div><h3>Casino</h3><p>Slots, roulette, blackjack — gagne des pièces et escalade le leaderboard.</p></div>
+    <div class="card"><div class="ico">⭐</div><h3>Système XP</h3><p>Gagne de l'XP en parlant, monte de niveau et débloque des récompenses.</p></div>
+    <div class="card"><div class="ico">🎫</div><h3>Tickets</h3><p>Système de support avec catégories, archives et gestion des staffs.</p></div>
+    <div class="card"><div class="ico">🤖</div><h3>Intelligence Artificielle</h3><p>Assistant IA intégré pour répondre aux questions et générer du contenu.</p></div>
+    <div class="card"><div class="ico">🎵</div><h3>Music</h3><p>Lecteur musical avec file d'attente, playlist et qualité audio optimisée.</p></div>
+    <div class="card"><div class="ico">📊</div><h3>Dashboard Complet</h3><p>Panneau de contrôle web pour gérer le bot et voir les stats en direct.</p></div>
   </div>
 </section>
 
@@ -217,79 +61,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--brd);padding:40px 
     <h2>Rangs <span>& Permissions</span></h2>
     <p>Chaque rang donne accès à des fonctionnalités exclusives.</p>
   </div>
-  <div class="ranks-grid">
-    <div class="rank-card">
-      <div class="rank-emoji">🌟</div>
-      <div class="rank-name">Super Admin</div>
-      <div class="rank-perms">Accès total au système, configuration serveur, gestion des admin</div>
-      <div class="rank-level">Niv. 999+</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">👑</div>
-      <div class="rank-name">Owner / Co-Owner</div>
-      <div class="rank-perms">Administration complète, gestion des staffs, override permissions</div>
-      <div class="rank-level">Niv. 97-100</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🔧</div>
-      <div class="rank-name">Développeur</div>
-      <div class="rank-perms">Accès aux configs techniques, logs avancés, debugging</div>
-      <div class="rank-level">Niv. 93-96</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🎖️</div>
-      <div class="rank-name">Directeur</div>
-      <div class="rank-perms">Gestion des partenariats, événements, recrutement staff</div>
-      <div class="rank-level">Niv. 90-92</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">⭐</div>
-      <div class="rank-name">Manageur</div>
-      <div class="rank-perms">Supervision modération, gestion channels,warnings avancés</div>
-      <div class="rank-level">Niv. 87-89</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🛡️</div>
-      <div class="rank-name">Resp. Modération</div>
-      <div class="rank-perms">Gestion équipe modo, sanctions, rapports</div>
-      <div class="rank-level">Niv. 84-86</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🔴</div>
-      <div class="rank-name">Admin</div>
-      <div class="rank-perms">Modération étendue, gestion rôles, channels temporaires</div>
-      <div class="rank-level">Niv. 80-83</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🟢</div>
-      <div class="rank-name">Modérateur</div>
-      <div class="rank-perms">Warn, mute, kick, lecture logs, gestion tickets</div>
-      <div class="rank-level">Niv. 68-79</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">💎</div>
-      <div class="rank-name">VIP</div>
-      <div class="rank-perms">Accès salon VIP, commandes exclusives, badge spécial</div>
-      <div class="rank-level">Niv. 15-29</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🚀</div>
-      <div class="rank-name">Booster</div>
-      <div class="rank-perms">Bonus XP, rôles cosmétiques, accès early features</div>
-      <div class="rank-level">Niv. 12-14</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">⚡</div>
-      <div class="rank-name">Immortal</div>
-      <div class="rank-perms">Commandes premium, priorité support, extras</div>
-      <div class="rank-level">Niv. 9-11</div>
-    </div>
-    <div class="rank-card">
-      <div class="rank-emoji">🐾</div>
-      <div class="rank-name">Good Boy/Girl</div>
-      <div class="rank-perms">Accès basique, participation événements</div>
-      <div class="rank-level">Niv. 1-2</div>
-    </div>
+  <div class="grid cols-2">
+    <div class="card"><div class="ico">🌟</div><h3>Super Admin</h3><p>Accès total au système et configuration serveur.</p></div>
+    <div class="card"><div class="ico">👑</div><h3>Owner / Co-Owner</h3><p>Administration complète et override permissions.</p></div>
+    <div class="card"><div class="ico">🔧</div><h3>Développeur</h3><p>Accès aux configs techniques et logs avancés.</p></div>
+    <div class="card"><div class="ico">🛡️</div><h3>Admin</h3><p>Modération étendue et gestion des rôles.</p></div>
+    <div class="card"><div class="ico">🟢</div><h3>Modérateur</h3><p>Warn, mute, kick et gestion des tickets.</p></div>
+    <div class="card"><div class="ico">💎</div><h3>VIP</h3><p>Accès salon VIP et commandes exclusives.</p></div>
   </div>
 </section>
 
@@ -307,46 +85,38 @@ footer{position:relative;z-index:1;border-top:1px solid var(--brd);padding:40px 
         <div class="badge" id="userBadge"></div>
       </div>
 
-      <div class="user-info" id="permInfo" style="background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.05);font-size:.8em"></div>
-
       <div id="loginForm">
         <div class="field">
           <label>ID Discord</label>
           <input type="text" id="userId" placeholder="123456789012345678" autocomplete="off">
         </div>
         <div class="field">
-          <label>Mot de passe</label>
-          <input type="password" id="password" placeholder="Mot de passe (optionnel)">
+          <label>Mot de passe (optionnel)</label>
+          <input type="password" id="password" placeholder="Optionnel en mode démo">
         </div>
         <div class="field">
-          <label>Clé d'accès (optionnel)</label>
-          <input type="text" id="accessKey" placeholder="Clé de licence pour accès premium" autocomplete="off">
+          <label>URL du bot (optionnel)</label>
+          <input type="text" id="botUrl" placeholder="https://ton-bot.com" autocomplete="off" onchange="window.setApiBase(this.value)">
+          <div style="font-size:.72em;color:var(--t2);margin-top:4px">Laisse vide pour le mode démo (100% fonctionnel sans backend).</div>
         </div>
-        <button class="btn btn-primary" id="loginBtn" onclick="doLogin()">
-          <div class="spinner"></div>
-          <span>🔑 Se connecter</span>
+        <button class="btn btn-primary" id="loginBtn" onclick="doLogin()" style="width:100%">
+          <div class="spinner"></div><span>🔑 Se connecter</span>
         </button>
         <div class="divider">ou</div>
-        <button class="btn btn-secondary" onclick="quickAccess()">⚡ Accès rapide (sans mot de passe)</button>
-        <div class="field" style="margin-top:14px">
-          <label>URL du bot <span style="opacity:.6">(optionnel — pré-remplie avec l'URL du bot)</span></label>
-          <input type="text" id="botUrl" placeholder="http://83.150.218.85:26030" autocomplete="off" onchange="window.setApiBase(this.value)">
-          <div style="font-size:.72em;color:var(--t2);margin-top:4px">Laisse vide si tu accèdes depuis le bot lui-même (http://localhost:8169 ou son URL).</div>
-        </div>
+        <button class="btn btn-g" onclick="quickAccess()" style="width:100%">⚡ Accès rapide (sans mot de passe)</button>
       </div>
 
-        <div id="dashboardAccess" style="display:none">
-          <button class="btn btn-dashboard" id="dashBtn" onclick="goDashboard()">📊 Accéder au Dashboard</button>
-          <div style="margin-top:12px;text-align:center">
-          <button class="btn btn-secondary" onclick="doLogout()" style="width:auto;display:inline-flex">🚪 Déconnexion</button>
+      <div id="dashboardAccess" style="display:none">
+        <button class="btn btn-ok" id="dashBtn" onclick="goDashboard()" style="width:100%">📊 Accéder au Dashboard</button>
+        <div style="margin-top:12px;text-align:center">
+          <button class="btn btn-g" onclick="doLogout()" style="width:auto;display:inline-flex">🚪 Déconnexion</button>
         </div>
       </div>
 
       <div class="perm-denied" id="permDenied">
         <div style="font-size:2em;margin-bottom:8px">🔒</div>
         <div><b>Accès refusé</b></div>
-        <div style="margin-top:4px;font-size:.82em">Tu as besoin du niveau <b>2 (OG)</b> minimum pour accéder au dashboard.</div>
-        <div style="margin-top:8px;font-size:.78em;color:var(--t2)">Contacte un administrateur si tu penses que c'est une erreur.</div>
+        <div style="margin-top:4px;font-size:.82em">Tu as besoin du niveau 2 minimum pour accéder au dashboard.</div>
       </div>
     </div>
   </div>
@@ -354,221 +124,104 @@ footer{position:relative;z-index:1;border-top:1px solid var(--brd);padding:40px 
 
 <footer>
   <div class="footer-content">
-    <div class="brand" style="font-size:1.3em;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">⚡ 𝓼ιмρℓє</div>
+    <div class="brand" style="font-size:1.3em;font-weight:800">⚡ 𝓼ιмρℓє</div>
     <div class="footer-links">
       <a href="#features">Fonctionnalités</a>
       <a href="#ranks">Rangs</a>
       <a href="#login">Connexion</a>
-      <a href="https://discord.com/oauth2/authorize?client_id=1513286724183130122&scope=bot+applications.commands&permissions=8" target="_blank">Discord</a>
-      <a href="https://github.com/bakakauwu0-star/bot-simple" target="_blank">GitHub</a>
+      <a href="https://github.com/bakakauwu0-star/sitewebsimplee" target="_blank">GitHub</a>
     </div>
-    <div class="footer-status">
-      <span class="dot"></span> Tous les systèmes opérationnels
-    </div>
+    <div class="footer-status"><span class="dot"></span> Tous les systèmes opérationnels</div>
     <div class="footer-copy">© 2026 𝓼ιмρℓє — Propulsé avec ❤️ par la communauté</div>
   </div>
 </footer>
 
-<script src="common.js"></script>
+<script src="app.js"></script>
 <script>
-const AAPI='/api/auth';
-let SESSION_TOKEN=localStorage.getItem('session_token')||'';
-let SESSION_USER=null;
-let SESSION_PERMS=null;
+const SESSION = { token: localStorage.getItem('session_token') || '', user: null, perms: null };
 
-function $(id){return document.getElementById(id)}
-function show(el,show){$(el).style.display=show?'block':'none'}
-function showClass(el,cls,show){$(el).classList[show?'add':'remove'](cls)}
+function $(id){ return document.getElementById(id); }
+function setError(m){ $('errorMsg').textContent = m; $('errorMsg').classList.add('show'); $('successMsg').classList.remove('show'); }
+function setSuccess(m){ $('successMsg').textContent = m; $('successMsg').classList.add('show'); $('errorMsg').classList.remove('show'); }
+function clearMsgs(){ $('errorMsg').classList.remove('show'); $('successMsg').classList.remove('show'); }
 
-function setError(msg){$('errorMsg').textContent=msg;showClass('errorMsg','show',true);showClass('successMsg','show',false)}
-function setSuccess(msg){$('successMsg').textContent=msg;showClass('successMsg','show',true);showClass('errorMsg','show',false)}
-function clearMsgs(){showClass('errorMsg','show',false);showClass('successMsg','show',false)}
-
-async function apiRaw(base,p,o){
-const headers={'Content-Type':'application/json',...(SESSION_TOKEN?{'x-session-token':SESSION_TOKEN}:{})};
-const url=(window.SITE?.apiBase||'')+`${base}${p}`;
-const res=await fetch(url,{...o,headers:{...headers,...o?.headers}});
-if(!res.ok){const t=await res.text().catch(()=>'');throw new Error(t||res.statusText)}
-return res.json()
-}
-
-function getBadgeForLevel(level){
-if(level>=999)return{emoji:'🌟',name:'Super Admin',color:'#ffd700'};
-if(level>=100)return{emoji:'👑',name:'Owner',color:'#ffd700'};
-if(level>=97)return{emoji:'👑',name:'Co-Owner',color:'#ffd700'};
-if(level>=93)return{emoji:'🔧',name:'Dév',color:'#3498db'};
-if(level>=90)return{emoji:'🎖️',name:'Directeur',color:'#9b59b6'};
-if(level>=87)return{emoji:'⭐',name:'Manageur',color:'#e67e22'};
-if(level>=84)return{emoji:'🛡️',name:'Resp. Modération',color:'#e74c3c'};
-if(level>=80)return{emoji:'🔴',name:'Admin',color:'#e74c3c'};
-if(level>=75)return{emoji:'🟠',name:'Chef Modérateur',color:'#e67e22'};
-if(level>=70)return{emoji:'🟡',name:'Senior Modérateur',color:'#f39c12'};
-if(level>=68)return{emoji:'🟢',name:'Modérateur',color:'#2ecc71'};
-if(level>=63)return{emoji:'🔵',name:'Recrue Modo',color:'#3498db'};
-if(level>=58)return{emoji:'⚪',name:'Modérateur Test',color:'#95a5a6'};
-if(level>=53)return{emoji:'🟣',name:'Staff Formation',color:'#9b59b6'};
-if(level>=48)return{emoji:'🎫',name:'Gestion Ticket',color:'#1abc9c'};
-if(level>=44)return{emoji:'📋',name:'Gestion',color:'#34495e'};
-if(level>=40)return{emoji:'💚',name:'Helper',color:'#2ecc71'};
-if(level>=36)return{emoji:'🔵',name:'Support',color:'#3498db'};
-if(level>=33)return{emoji:'📢',name:'Resp. Annonces',color:'#e67e22'};
-if(level>=30)return{emoji:'💬',name:'Community Manager',color:'#9b59b6'};
-if(level>=27)return{emoji:'🎭',name:'Chef Animateur',color:'#e74c3c'};
-if(level>=24)return{emoji:'🎪',name:'Animateur',color:'#f39c12'};
-if(level>=21)return{emoji:'🤝',name:'Resp. Partenariats',color:'#1abc9c'};
-if(level>=18)return{emoji:'🔗',name:'Gestion Partenariat',color:'#16a085'};
-if(level>=15)return{emoji:'💎',name:'VIP',color:'#9b59b6'};
-if(level>=12)return{emoji:'🚀',name:'Booster',color:'#e91e63'};
-if(level>=9)return{emoji:'⚡',name:'Immortal',color:'#00bcd4'};
-if(level>=7)return{emoji:'⭐',name:'3 Étoiles',color:'#ffd700'};
-if(level>=5)return{emoji:'🌟',name:'2 Étoiles',color:'#c0c0c0'};
-if(level>=3)return{emoji:'✨',name:'1 Étoile',color:'#cd7f32'};
-if(level>=2)return{emoji:'🏆',name:'OG Fondateur',color:'#ffd700'};
-if(level>=1)return{emoji:'🐾',name:'Good Boy/Girl',color:'#e91e63'};
-return{emoji:'👤',name:'Membre',color:'#95a5a6'};
-}
-
-async function checkSession(){
-if(!SESSION_TOKEN)return false;
-try{
-const r=await apiRaw(AAPI,'/verify');
-if(r.valid){
-SESSION_USER={...r.session,...r.user};
-const perms=await apiRaw(AAPI,'/permissions-detailed');
-SESSION_PERMS=perms;
-updateUI(true);
-return true}
-throw new Error()
-}catch(e){
-SESSION_TOKEN='';SESSION_USER=null;SESSION_PERMS=null;localStorage.removeItem('session_token');
-updateUI(false);
-return false}
-}
-
-function updateUI(loggedIn){
-const loginForm=$('loginForm');
-const dashAccess=$('dashboardAccess');
-const permDenied=$('permDenied');
-const userInfo=$('userInfo');
-const permInfo=$('permInfo');
-
-if(loggedIn&&SESSION_USER&&SESSION_PERMS){
-show('loginForm',false);
-const canAccess=SESSION_PERMS.canAccessDashboard;
-
-if(canAccess){
-show('dashboardAccess',true);
-show('permDenied',false);
-show('userInfo',true);
-show('permInfo',true);
-
-const badge=getBadgeForLevel(SESSION_PERMS.permLevel);
-$('userAvatar').textContent=(SESSION_USER.id||'?').charAt(0).toUpperCase();
-$('userName').textContent=(SESSION_USER.id||'Inconnu').slice(0,16)+'…';
-$('userLevel').textContent=`Niveau XP: ${SESSION_PERMS.xpLevel} • Perm: ${SESSION_PERMS.permName} (${SESSION_PERMS.permLevel})`;
-$('userBadge').textContent=`${badge.emoji} ${badge.name}`;
-$('userBadge').style.background=badge.color+'22';
-$('userBadge').style.color=badge.color;
-
-if(SESSION_PERMS.isSuper){
-$('permInfo').innerHTML='<span style="color:#ffd700">🌟 Super Admin — Accès total</span>';
-}else{
-$('permInfo').innerHTML=`<span style="color:var(--t2)">🔑 ${SESSION_PERMS.permName} (Niv. ${SESSION_PERMS.permLevel}) • XP Niv. ${SESSION_PERMS.xpLevel}</span>`;
-}
-}else{
-show('dashboardAccess',false);
-show('permDenied',true);
-show('userInfo',true);
-show('permInfo',true);
-
-const badge=getBadgeForLevel(SESSION_PERMS.permLevel);
-$('userAvatar').textContent=(SESSION_USER.id||'?').charAt(0).toUpperCase();
-$('userName').textContent=(SESSION_USER.id||'Inconnu').slice(0,16)+'…';
-$('userLevel').textContent=`Niveau XP: ${SESSION_PERMS.xpLevel} • Perm: ${SESSION_PERMS.permName} (${SESSION_PERMS.permLevel})`;
-$('userBadge').textContent=`${badge.emoji} ${badge.name}`;
-$('userBadge').style.background=badge.color+'22';
-$('userBadge').style.color=badge.color;
-
-if(SESSION_PERMS.isSuper){
-$('permInfo').innerHTML='<span style="color:#ffd700">🌟 Super Admin — Accès total</span>';
-}else{
-$('permInfo').innerHTML=`<span style="color:var(--t2)">🔑 ${SESSION_PERMS.permName} (Niv. ${SESSION_PERMS.permLevel}) • XP Niv. ${SESSION_PERMS.xpLevel}</span>`;
-}
-}
-}else{
-show('loginForm',true);
-show('dashboardAccess',false);
-show('permDenied',false);
-show('userInfo',false);
-show('permInfo',false);
-}
-}
-
-async function doLogin(){
-const userId=$('userId').value.trim();
-const password=$('password').value.trim()||'none';
-const accessKey=$('accessKey').value.trim()||'';
-if(!userId){setError('ID Discord requis');return}
-
-clearMsgs();
-const btn=$('loginBtn');
-btn.classList.add('loading');btn.disabled=true;
-
-try{
-const r=await apiRaw(AAPI,'/login',{method:'POST',body:JSON.stringify({userId,password,accessKey})});
-SESSION_TOKEN=r.token;
-SESSION_USER={id:r.user.id,level:r.user.level,xp:r.user.xp,isSuper:r.user.isSuper};
-localStorage.setItem('session_token',r.token);
-localStorage.setItem('permissionLevel',r.permissionLevel||0);
-localStorage.setItem('permissionName',r.permissionName||'Membre');
-setSuccess('Connexion réussie !');
-setTimeout(()=>updateUI(true),300);
-  }catch(e){
-    if(isBackendDown(e)){setError('⚠️ Serveur du bot injoignable. Le bot doit être en ligne (et le proxy /api configuré sur Netlify).');backendUnreachable(e.message);}
-    else setError(e.message||'Erreur de connexion');
-  }finally{
-    btn.classList.remove('loading');btn.disabled=false;
+function updateUI() {
+  const loggedIn = !!(SESSION.token && SESSION.user && SESSION.perms);
+  if (loggedIn && SESSION.perms.canAccessDashboard) {
+    show('loginForm', false); show('permDenied', false); show('userInfo', true); show('dashboardAccess', true);
+    const b = window.getBadgeForLevel(SESSION.perms.permLevel);
+    $('userAvatar').textContent = (SESSION.user.id || '?').charAt(0).toUpperCase();
+    $('userName').textContent = (SESSION.user.id || 'Inconnu').slice(0, 16) + '…';
+    $('userLevel').textContent = `Niveau XP: ${SESSION.perms.xpLevel} • ${SESSION.perms.permName}`;
+    $('userBadge').textContent = `${b.emoji} ${b.name}`;
+    $('userBadge').style.background = b.color + '22'; $('userBadge').style.color = b.color;
+  } else if (loggedIn) {
+    show('loginForm', false); show('dashboardAccess', false); show('userInfo', true); show('permDenied', true);
+    const b = window.getBadgeForLevel(SESSION.perms.permLevel);
+    $('userAvatar').textContent = (SESSION.user.id || '?').charAt(0).toUpperCase();
+    $('userName').textContent = (SESSION.user.id || 'Inconnu').slice(0, 16) + '…';
+    $('userBadge').textContent = `${b.emoji} ${b.name}`;
+  } else {
+    show('loginForm', true); show('dashboardAccess', false); show('permDenied', false); show('userInfo', false);
   }
 }
+function show(id, v){ $(id).style.display = v ? 'block' : 'none'; }
 
-async function quickAccess(){
-const userId=$('userId').value.trim();
-if(!userId){setError('ID Discord requis pour l accès rapide');return}
-clearMsgs();
-const btn=$('loginBtn');
-btn.classList.add('loading');btn.disabled=true;
-
-try{
-const r=await apiRaw(AAPI,'/login',{method:'POST',body:JSON.stringify({userId,password:'none'})});
-SESSION_TOKEN=r.token;
-SESSION_USER={id:r.user.id,level:r.user.level,xp:r.user.xp,isSuper:r.user.isSuper};
-localStorage.setItem('session_token',r.token);
-localStorage.setItem('permissionLevel',r.permissionLevel||0);
-localStorage.setItem('permissionName',r.permissionName||'Membre');
-setSuccess('Connecté !');
-setTimeout(()=>updateUI(true),300);
-}catch(e){
-setError(e.message||'Erreur: cet ID n\'est pas enregistré dans le système');
-}finally{
-btn.classList.remove('loading');btn.disabled=false;
-}
+async function doLogin() {
+  const userId = $('userId').value.trim();
+  if (!userId) { setError('ID Discord requis'); return; }
+  clearMsgs();
+  const btn = $('loginBtn'); btn.classList.add('loading'); btn.disabled = true;
+  try {
+    const r = await window.authCall('/login', { userId, password: $('password').value.trim() || 'none' });
+    SESSION.token = r.token; SESSION.user = r.user; SESSION.perms = r.profile;
+    localStorage.setItem('session_token', r.token);
+    localStorage.setItem('permissionLevel', r.permissionLevel || 0);
+    localStorage.setItem('permissionName', r.permissionName || 'Membre');
+    setSuccess('Connexion réussie !'); setTimeout(updateUI, 300);
+  } catch (e) { setError(e.message || 'Erreur de connexion'); }
+  finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
 
-async function doLogout(){
-try{await apiRaw(AAPI,'/logout',{method:'POST'})}catch(e){}
-SESSION_TOKEN='';SESSION_USER=null;localStorage.removeItem('session_token');localStorage.removeItem('permissionLevel');localStorage.removeItem('permissionName');
-clearMsgs();updateUI(false);
-$('userId').value='';$('password').value='';
+async function quickAccess() {
+  const userId = $('userId').value.trim();
+  if (!userId) { setError('ID Discord requis'); return; }
+  clearMsgs();
+  const btn = $('loginBtn'); btn.classList.add('loading'); btn.disabled = true;
+  try {
+    const r = await window.authCall('/login', { userId, password: 'none' });
+    SESSION.token = r.token; SESSION.user = r.user; SESSION.perms = r.profile;
+    localStorage.setItem('session_token', r.token);
+    localStorage.setItem('permissionLevel', r.permissionLevel || 0);
+    localStorage.setItem('permissionName', r.permissionName || 'Membre');
+    setSuccess('Connecté !'); setTimeout(updateUI, 300);
+  } catch (e) { setError(e.message || 'ID inconnu'); }
+  finally { btn.classList.remove('loading'); btn.disabled = false; }
 }
 
-function goDashboard(){window.location.href='dashboard.html'}
+function doLogout() {
+  SESSION.token = ''; SESSION.user = null; SESSION.perms = null;
+  localStorage.removeItem('session_token'); localStorage.removeItem('permissionLevel'); localStorage.removeItem('permissionName');
+  clearMsgs(); updateUI();
+  $('userId').value = ''; $('password').value = '';
+}
 
-document.addEventListener('DOMContentLoaded',()=>{
-const _bu=$('botUrl'); if(_bu){_bu.value=window.getApiBase?window.getApiBase():''}
-checkSession()
+function goDashboard(){ window.location.href = 'dashboard.html'; }
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.getApiBase) $('botUrl').value = window.getApiBase();
+  if (SESSION.token) {
+    // restore a session from storage (demo-friendly)
+    try {
+      const lvl = parseInt(localStorage.getItem('permissionLevel')) || 0;
+      SESSION.user = { id: (localStorage.getItem('session_token') || '').replace('demo-', '').split('-')[0] || 'Inconnu' };
+      SESSION.perms = window.deriveProfile(SESSION.user.id);
+      updateUI();
+    } catch (e) { updateUI(); }
+  } else updateUI();
 });
-$('password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
-$('userId').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+$('password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+$('userId').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 </script>
 </body>
 </html>
