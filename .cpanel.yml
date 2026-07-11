@@ -2,12 +2,16 @@
 deployment:
   tasks:
     - export SRC=$(pwd)
-    - export DEPLOY1=/home/simplees/simplee.sub-yorkhost.fr
-    - export DEPLOY2=/home/simplees/public_html/simplee.sub-yorkhost.fr
-    - /bin/mkdir -p $DEPLOY1 $DEPLOY2
+    - export PUBLIC=/home/simplees/public_html
+    - export SUB1=$PUBLIC/simplee.sub-yorkhost.fr
+    - export SUB2=/home/simplees/simplee.sub-yorkhost.fr
+    - /bin/mkdir -p $PUBLIC $SUB1 $SUB2
+    - /bin/mkdir -p $SUB1/api/data $SUB2/api/data
     - shopt -s dotglob
-    - /bin/rm -rf $DEPLOY1/* $DEPLOY2/*
-    - /bin/cp -af $SRC/* $DEPLOY1/
-    - /bin/cp -af $SRC/* $DEPLOY2/
-    - /bin/rm -rf $DEPLOY1/.git $DEPLOY1/.github $DEPLOY1/.cpanel.yml
-    - /bin/rm -rf $DEPLOY2/.git $DEPLOY2/.github $DEPLOY2/.cpanel.yml
+    - /bin/cp -af $SRC/index.html $SRC/dashboard.html $SRC/styles.css $SRC/app.js $SRC/.htaccess $SUB1/
+    - /bin/cp -af $SRC/index.html $SRC/dashboard.html $SRC/styles.css $SRC/app.js $SRC/.htaccess $SUB2/
+    - /bin/mkdir -p $SUB1/api $SUB2/api
+    - /bin/cp -af $SRC/api/* $SUB1/api/
+    - /bin/cp -af $SRC/api/* $SUB2/api/
+    - /bin/chmod -R 755 $SUB1 $SUB2
+    - /bin/chmod 777 $SUB1/api/data $SUB2/api/data
