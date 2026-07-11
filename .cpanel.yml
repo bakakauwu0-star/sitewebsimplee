@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/simplees/public_html/sitewebsimplee
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -af * $DEPLOYPATH
