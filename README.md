@@ -28,11 +28,10 @@ api/.htaccess   Réécriture d'URL propre pour l'API
 ## 🚀 Hébergement
 
 ### cPanel (Git™ Version Control)
-1. **SSH Access** : génère/importe une clé, ajoute la **clé publique** comme
-   *Deploy key* sur le dépôt GitHub (`Settings → Deploy keys → Add deploy key`).
-2. **Git Version Control** : Clone URL =
-   `git@github.com:bakakauwu0-star/sitewebsimplee.git`,
-   Repository Path = `public_html/sitewebsimplee`.
+1. **Git Version Control** : Crée un dépôt avec :
+   - Clone URL = `https://github.com/bakakauwu0-star/sitewebsimplee.git`
+   - Repository Path = `sitewebsimplee`
+2. Le dépôt doit être **public** sur GitHub pour un clonage HTTPS sans clé SSH.
 3. Le site est live sur `http://tondomaine.com/sitewebsimplee/`.
 
 ### GitHub Pages

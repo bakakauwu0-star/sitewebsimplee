@@ -301,8 +301,9 @@
   async function authCall(path, body) {
     if (window.SITE.useRemote) {
       try {
+        const token = localStorage.getItem('session_token') || '';
         const res = await fetch(window.SITE.apiBase + '/api/auth' + path, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'x-session-token': token }, body: JSON.stringify(body),
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return await res.json();

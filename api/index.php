@@ -118,12 +118,12 @@ try {
     ok(['token' => $tok, 'user' => ['id' => $profile['id'], 'level' => $profile['level'], 'xp' => $profile['xp'], 'isSuper' => $profile['isSuper']],
         'permissionLevel' => $profile['permLevel'], 'permissionName' => $profile['permName'], 'profile' => $profile]);
   }
-  if ($r === 'auth/verify' && $method === 'GET') {
+  if ($r === 'auth/verify') {
     $sessions = read_json('sessions.json', []);
     if (!$token || empty($sessions[$token])) fail('Session invalide', 401);
     $userId = $sessions[$token]['userId'];
     $profile = derive($userId);
-    ok(['valid' => true, 'session' => ['id' => $userId], 'user' => ['id' => $userId]]);
+    ok(['valid' => true, 'session' => ['id' => $userId], 'user' => ['id' => $userId], 'profile' => $profile]);
   }
   if ($r === 'auth/logout' && $method === 'POST') {
     $sessions = read_json('sessions.json', []);
