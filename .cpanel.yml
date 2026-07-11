@@ -3,15 +3,9 @@ deployment:
   tasks:
     - export SRC=$(pwd)
     - export PUBLIC=/home/simplees/public_html
-    - export SUB1=$PUBLIC/simplee.sub-yorkhost.fr
-    - export SUB2=/home/simplees/simplee.sub-yorkhost.fr
-    - /bin/mkdir -p $PUBLIC $SUB1 $SUB2
-    - /bin/mkdir -p $SUB1/api/data $SUB2/api/data
+    - export SUB=$PUBLIC/simplee.sub-yorkhost.fr
+    - /bin/mkdir -p $SUB/api/data
     - shopt -s dotglob
-    - /bin/cp -af $SRC/index.html $SRC/dashboard.html $SRC/styles.css $SRC/app.js $SRC/.htaccess $SUB1/
-    - /bin/cp -af $SRC/index.html $SRC/dashboard.html $SRC/styles.css $SRC/app.js $SRC/.htaccess $SUB2/
-    - /bin/mkdir -p $SUB1/api $SUB2/api
-    - /bin/cp -af $SRC/api/* $SUB1/api/
-    - /bin/cp -af $SRC/api/* $SUB2/api/
-    - /bin/chmod -R 755 $SUB1 $SUB2
-    - /bin/chmod 777 $SUB1/api/data $SUB2/api/data
+    - /bin/cp -af $SRC/* $SUB/
+    - /bin/chmod -R 755 $SUB
+    - /bin/chmod 777 $SUB/api/data
