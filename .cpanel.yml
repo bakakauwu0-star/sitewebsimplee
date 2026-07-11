@@ -3,5 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/simplees/public_html/sitewebsimplee
     - /bin/mkdir -p $DEPLOYPATH
-    - /bin/rm -rf $DEPLOYPATH/index.html $DEPLOYPATH/dashboard.html $DEPLOYPATH/styles.css $DEPLOYPATH/app.js $DEPLOYPATH/README.md $DEPLOYPATH/.htaccess $DEPLOYPATH/api
-    - /bin/cp -af index.html dashboard.html styles.css app.js README.md .htaccess api $DEPLOYPATH/
+    - shopt -s dotglob
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/cp -af * $DEPLOYPATH
+    - /bin/rm -rf $DEPLOYPATH/.git $DEPLOYPATH/.github $DEPLOYPATH/.cpanel.yml
