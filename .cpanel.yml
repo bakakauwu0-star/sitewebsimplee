@@ -1,9 +1,13 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/simplees/public_html
-    - /bin/mkdir -p $DEPLOYPATH
+    - export SRC=$(pwd)
+    - export DEPLOY1=/home/simplees/simplee.sub-yorkhost.fr
+    - export DEPLOY2=/home/simplees/public_html/simplee.sub-yorkhost.fr
+    - /bin/mkdir -p $DEPLOY1 $DEPLOY2
     - shopt -s dotglob
-    - /bin/rm -rf $DEPLOYPATH/*
-    - /bin/cp -af * $DEPLOYPATH
-    - /bin/rm -rf $DEPLOYPATH/.git $DEPLOYPATH/.github $DEPLOYPATH/.cpanel.yml
+    - /bin/rm -rf $DEPLOY1/* $DEPLOY2/*
+    - /bin/cp -af $SRC/* $DEPLOY1/
+    - /bin/cp -af $SRC/* $DEPLOY2/
+    - /bin/rm -rf $DEPLOY1/.git $DEPLOY1/.github $DEPLOY1/.cpanel.yml
+    - /bin/rm -rf $DEPLOY2/.git $DEPLOY2/.github $DEPLOY2/.cpanel.yml
